@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
+    <width>602</width>
     <height>331</height>
    </rect>
   </property>
@@ -42,7 +42,7 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>340</x>
      <y>20</y>
      <width>111</width>
      <height>17</height>
@@ -55,7 +55,7 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>340</x>
      <y>40</y>
      <width>91</width>
      <height>17</height>
@@ -70,42 +70,36 @@
     <rect>
      <x>10</x>
      <y>230</y>
-     <width>631</width>
+     <width>571</width>
      <height>91</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout"/>
   </widget>
-  <widget class="QFrame" name="frame">
+  <widget class="QLabel" name="FriendlySprite">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>110</y>
-     <width>141</width>
-     <height>111</height>
+     <y>140</y>
+     <width>111</width>
+     <height>81</height>
     </rect>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
+   <property name="text">
+    <string>Friendly Sprite</string>
    </property>
   </widget>
-  <widget class="QFrame" name="frame_2">
+  <widget class="QLabel" name="EnemySprite">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>460</x>
      <y>40</y>
-     <width>111</width>
-     <height>111</height>
+     <width>101</width>
+     <height>81</height>
     </rect>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
+   <property name="text">
+    <string>Enemy Sprite</string>
    </property>
   </widget>
  </widget>

@@ -2,7 +2,9 @@
 #define BATTLEFORM_H
 
 #include <QWidget>
-
+#include <QLabel>
+#include <QMovie>
+#include <QFile>
 namespace Ui {
 class BattleForm;
 }
@@ -13,6 +15,7 @@ class BattleForm : public QWidget
 
 public:
     explicit BattleForm(QWidget *parent = 0);
+    void setGif(QString gif, QLabel *label);
     ~BattleForm();
 
 private:

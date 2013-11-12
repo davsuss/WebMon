@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QMovie>
 #include <QLabel>
+#include <QLayout>
+#include "battleform.h"
+#include <QGridLayout>
 namespace Ui {
 class MainWindow;
 }

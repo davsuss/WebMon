@@ -7,8 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setGif("Spr_2c_025.gif",ui->label_2);
-
-
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(new BattleForm());
+    ui->BattleGroupBox->setLayout(layout);
 }
 
 MainWindow::~MainWindow()
