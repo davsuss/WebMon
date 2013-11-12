@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    battleform.cpp
+    battleform.cpp \
+    datastore.cpp
 
 HEADERS  += mainwindow.h \
-    battleform.h
+    battleform.h \
+    datastore.h
 
 FORMS    += mainwindow.ui \
     battleform.ui

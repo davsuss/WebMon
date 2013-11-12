@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QMovie>
+#include <QLabel>
 namespace Ui {
 class MainWindow;
 }
@@ -14,7 +15,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+    void setGif(QString gif,QLabel* label);
 private:
     Ui::MainWindow *ui;
 };
