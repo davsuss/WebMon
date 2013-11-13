@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(new BattleForm());
     ui->BattleGroupBox->setLayout(layout);
+
 }
 
 MainWindow::~MainWindow()

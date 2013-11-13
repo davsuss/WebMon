@@ -6,6 +6,8 @@ BattleForm::BattleForm(QWidget *parent) :
     ui(new Ui::BattleForm)
 {
     ui->setupUi(this);
+    QPixmap map;
+    ui->Background->lower();
     setGif("004.gif",ui->FriendlySprite);
     setGif("004-back.gif",ui->EnemySprite);
 }
