@@ -15,11 +15,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     battleform.cpp \
-    datastore.cpp
+    datastore.cpp \
+    pokemon.cpp \
+    controller.cpp
 
 HEADERS  += mainwindow.h \
     battleform.h \
-    datastore.h
+    datastore.h \
+    pokemon.h \
+    controller.h
 
 FORMS    += mainwindow.ui \
     battleform.ui
