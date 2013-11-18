@@ -17,13 +17,16 @@ SOURCES += main.cpp\
     battleform.cpp \
     datastore.cpp \
     pokemon.cpp \
-    controller.cpp
+    controller.cpp \
+    logindialog.cpp
 
 HEADERS  += mainwindow.h \
     battleform.h \
     datastore.h \
     pokemon.h \
-    controller.h
+    controller.h \
+    logindialog.h
 
 FORMS    += mainwindow.ui \
-    battleform.ui
+    battleform.ui \
+    logindialog.ui
