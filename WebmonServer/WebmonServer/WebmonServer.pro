@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2013-11-16T08:13:16
+# Project created by QtCreator 2013-11-25T22:49:48
 #
 #-------------------------------------------------
 
@@ -15,8 +15,4 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
-    databaseAccessor.cpp
-
-HEADERS += \
-    databaseAccessor.h
+SOURCES += main.cpp
