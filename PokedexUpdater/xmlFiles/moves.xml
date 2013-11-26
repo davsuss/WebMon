@@ -1,0 +1,72 @@
+<moves>
+<move>
+<name>Bubble</name>
+<type>Water</type>
+<pp>30</pp>
+<baseDamage>40</baseDamage>
+<Accuracy>100</Accuracy>
+</move>
+<move>
+<name>Scald</name>
+<type>Water</type>
+<pp>15</pp>
+<baseDamage>80</baseDamage>
+<Accuracy>100</Accuracy>
+</move>
+<move>
+<name>Hydro Pump</name>
+<type>Water</type>
+<pp>5</pp>
+<baseDamage>110</baseDamage>
+<Accuracy>80</Accuracy>
+</move>
+<move>
+<name>Vine Whip</name>
+<type>Grass</type>
+<pp>25</pp>
+<baseDamage>45</baseDamage>
+<Accuracy>100</Accuracy>
+</move>
+<move>
+<name>Razor Leaf</name>
+<type>Grass</type>
+<pp>25</pp>
+<baseDamage>60</baseDamage>
+<Accuracy>95</Accuracy>
+</move>
+<move>
+<name>Frenzy Plant</name>
+<type>Grass</type>
+<pp>5</pp>
+<baseDamage>140</baseDamage>
+<Accuracy>75</Accuracy>
+</move>
+<move>
+<name>Ember</name>
+<type>Fire</type>
+<pp>25</pp>
+<baseDamage>30</baseDamage>
+<Accuracy>100</Accuracy>
+</move>
+<move>
+<name>Flamethrower</name>
+<type>Fire</type>
+<pp>25</pp>
+<baseDamage>90</baseDamage>
+<Accuracy>100</Accuracy>
+</move>
+<move>
+<name>Fire Blast</name>
+<type>Fire</type>
+<pp>5</pp>
+<baseDamage>110</baseDamage>
+<Accuracy>85</Accuracy>
+</move>
+<move>
+<name>Troll Move</name>
+<type>Undefined</type>
+<pp>1</pp>
+<baseDamage>200</baseDamage>
+<Accuracy>50</Accuracy>
+</move>
+</moves>
