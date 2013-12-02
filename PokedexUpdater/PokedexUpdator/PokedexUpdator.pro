@@ -5,7 +5,9 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += sql
+QT       += xml
+QT       += xmlpatterns
 QT       -= gui
 
 TARGET = PokedexUpdator
@@ -15,4 +17,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    xmltodatabase.cpp
+
+HEADERS += \
+    xmltodatabase.h

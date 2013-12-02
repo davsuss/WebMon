@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core
-
+QT       += sql
 QT       -= gui
 
 TARGET = WebmonServer
@@ -15,4 +15,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    xmltodatabase.cpp
+
+HEADERS += \
+    xmltodatabase.h

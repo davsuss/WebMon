@@ -1,5 +1,6 @@
 <effect>
-<Grass>
+<attack>
+<name>Grass</name>
 <victim>
 	<type>Grass</type>
 	<modifier>0.5</modifier>
@@ -16,8 +17,9 @@
         <type>Undefined</type>
         <modifier>1</modifier>
 </victim>
-</Grass>
-<Fire>
+</attack>
+<attack>
+<name>Fire</name>
 <victim>        
         <type>Grass</type>
         <modifier>2</modifier>
@@ -34,8 +36,9 @@
         <type>Undefined</type>
         <modifier>1</modifier>
 </victim>
-</Fire>
-<Water>
+</attack>
+<attack>
+<name>Water</name>
 <victim>        
         <type>Grass</type>
         <modifier>0.5</modifier>
@@ -52,8 +55,9 @@
         <type>Undefined</type>
         <modifier>1</modifier>
 </victim>
-</Water>
-<Undefined>
+</attack>
+<attack>
+<name>Undefined</name>
 <victim>
         <type>Grass</type>
         <modifier>1</modifier>
@@ -70,5 +74,5 @@
         <type>Undefined</type>
         <modifier>0</modifier>
 </victim>
-</Undefined>
+</attack>
 </effect>
