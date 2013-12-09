@@ -23,7 +23,7 @@
 	</xs:complexType>
 
 	<xs:simpleType name="modType">
-		<xs:restriction base="xs:integer">
+		<xs:restriction base="xs:decimal">
                      <xs:enumeration value="0"/>
                      <xs:enumeration value="0.5"/>
                      <xs:enumeration value="1.0"/>

@@ -19,13 +19,12 @@ void createTables()
     // create tables
     QSqlQuery query;
 
-    query.exec("CREATE TABLE Moves(moveid integer primary key, Name varchar(20), Type varchar(20), PP integer, Damage integer, Accuracy integer)");
-    query.exec("CREATE TABLE TypeEffectiveness(TEID INTEGER primary key, AttackType varchar(20), VictimType varchar(20), Modifier varchar(20))");
-    query.exec("CREATE TABLE Pokedex(PID INTEGER primary key, AtEVyield INTEGER, DefEVyield INTEGER, speedEVyield INTEGER, HPEVyield INTEGER, EXPyield INTEGER, Type varchar(20))");
+    query.exec("create table Moves(moveid integer primary key, Name varchar(20), Type varchar(20), PP integer, Damage integer, Accuracy integer)");
 
-    /*query.exec("CREATE TABLE Trainers(trainerid integer primary key, Name varchar(20), CaughtPokemon varchar(20))");
+    query.exec("create table TypeEffectiveness(teid integer primary key, AttackType varchar(20), VictimType varchar(20), Modifier varchar(20))");
 
-     query.exec("CREATE TABLE CaughtPokemon(CPID INTEGER primary key, PID INTEGER, AtEV INTEGER, DefEV INTEGER, speedEV INTEGER, HPEV INTEGER, EXP INTEGER, Type INTEGER)");*/
+    query.exec("create table Pokedex(pid integer primary key, Name varchar(20), Type varchar(20), BaseAtt integer, BaseDef integer, BaseSpeed integer, BaseHP integer, AtEVyield integer, DefEVyield integer, speedEVyield integer, HPEVyield integer, EXPyield integer)");
+    /**/
 }
 
 void updateTables()
@@ -47,7 +46,7 @@ void readALLMoves()
     QString moveDamage;
     QSqlQuery query;
     /* We'll parse the example.xml */
-    QFile* file = new QFile("home/priam93/Documents/WebMon/PokedexUpdater/xmlFiles/moves.xml");
+    QFile* file = new QFile("/home/priam93/Documents/WebMon/PokedexUpdater/xmlFiles/moves.xml");
     /* If we can't open it, let's show an error message. */
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -115,25 +114,45 @@ void readALLMoves()
                 }
             }
             QString statement = "INSERT INTO Moves (Name, Type, PP, Damage, Accuracy) values('"
-                    + moveName + "', '" + moveType + "', " + movePP.toInt() + ", " + moveDamage.toInt()
-                    + ", " + moveAccuracy.toInt() + ")";
+                    + moveName + "', '" + moveType + "', " + movePP + ", " + moveDamage
+                    + ", " + moveAccuracy + ")";
             query.exec(statement);
+            qDebug() << "Command: " << statement ;
         }
     }
     /* Error handling. */
     if(xml.hasError())
     {
-
+        qDebug() << "XMLError in moves.xml";
     }
     /* Removes any device() or data from the reader
      * and resets its internal state to the initial state. */
     xml.clear();
+    QString statement = "SELECT * FROM Moves";
+    query.exec(statement);
+    qDebug() << "Command2: " << statement ;
+    while( query.next() )
+    {
+        qDebug() << "Result: " << query.record().field("Name").value().toString();
+    }
 }
 
 void readALLPokemon()
 {
+    QString pokemonName;
+    QString pokemonType;
+    QString attack;
+    QString defense;
+    QString speed;
+    QString HP;
+    QString attackYield;
+    QString defenseYield;
+    QString speedYield;
+    QString HPYield;
+    QString expYield;
+    QSqlQuery query;
     /* We'll parse the example.xml */
-    QFile* file = new QFile("home/priam93/Documents/WebMon/PokedexUpdater/xmlFiles/AllPokemon.xml");
+    QFile* file = new QFile("/home/priam93/Documents/WebMon/PokedexUpdater/xmlFiles/AllPokemon.xml");
     /* If we can't open it, let's show an error message. */
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Problem Opening File!";
@@ -156,12 +175,78 @@ void readALLPokemon()
         /* If token is StartElement, we'll see if we can read it.*/
         if(token == QXmlStreamReader::StartElement) {
             /* If it's named persons, we'll go to the next.*/
-            if(xml.name() == "circuit") {
+            if(xml.name() == "pokedex") {
                 continue;
             }
-            /* If it's named person, we'll dig the information from there.*/
-            if(xml.name() == "gate") {
-                //addGate(xml);
+            /* If it's named pokemon, we'll dig the information from there.*/
+            if(xml.name() == "pokemon") {
+                /*
+                 * We're going to loop over the things because the order might change.
+                 * We'll continue the loop until we hit an EndElement named person.
+                 */
+                while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                        xml.name() == "pokemon"))
+                {
+                    if(xml.tokenType() == QXmlStreamReader::StartElement) {
+
+                        if(xml.name() == "ID")
+                        {
+
+                        }
+                        else if(xml.name() == "name")
+                        {
+                            pokemonName = xml.readElementText();
+                        }
+                        else if(xml.name() == "type")
+                        {
+                            pokemonType = xml.readElementText();
+                        }
+                        else if(xml.name() == "HP")
+                        {
+                            HP = xml.readElementText();
+                        }
+                        else if(xml.name() == "Attack")
+                        {
+                            attack = xml.readElementText();
+                        }
+                        else if(xml.name() == "Defense")
+                        {
+                            defense = xml.readElementText();
+                        }
+                        else if(xml.name() == "Speed")
+                        {
+                            speed = xml.readElementText();
+                        }
+                        else if(xml.name() == "HPYield")
+                        {
+                            HPYield = xml.readElementText();
+                        }
+                        else if(xml.name() == "AttackYield")
+                        {
+                            attackYield = xml.readElementText();
+                        }
+                        else if(xml.name() == "DefenseYield")
+                        {
+                            defenseYield = xml.readElementText();
+                        }
+                        else if(xml.name() == "SpeedYield")
+                        {
+                            speedYield = xml.readElementText();
+                        }
+                        else if(xml.name() == "EXPYield")
+                        {
+                            expYield = xml.readElementText();
+                        }
+                    }
+                    /* ...and next... */
+                    xml.readNext();
+                }
+                QString statement = "INSERT INTO Pokedex (Name, Type, BaseAtt, BaseDef, BaseSpeed, BaseHP, AtEVyield, DefEVyield, speedEVyield, HPEVyield, EXPyield) values('"
+                        + pokemonName + "', '" + pokemonType + "', " + attack + ", " + defense
+                        + ", " + speed + ", " + HP + ", " + attackYield + ", " + defenseYield + ", " + speedYield
+                        + ", " + HPYield + ", " + expYield + ")";
+                query.exec(statement);
+                qDebug() << "Command: " << statement ;
             }
         }
     }
@@ -172,12 +257,23 @@ void readALLPokemon()
     /* Removes any device() or data from the reader
      * and resets its internal state to the initial state. */
     xml.clear();
+    QString statement = "SELECT * FROM Pokedex";
+    query.exec(statement);
+    qDebug() << "Command2: " << statement ;
+    while( query.next() )
+    {
+        qDebug() << "Result: " << query.record().field("Name").value().toString();
+    }
 }
 
 void readALLTypeEffectiveness()
 {
+    QString attackType;
+    QString victimType;
+    QString modifier;
+    QSqlQuery query;
     /* We'll parse the example.xml */
-    QFile* file = new QFile("home/priam93/Documents/WebMon/PokedexUpdater/xmlFiles/typeEffectiveness.xml");
+    QFile* file = new QFile("/home/priam93/Documents/WebMon/PokedexUpdater/xmlFiles/typeEffectiveness.xml");
     /* If we can't open it, let's show an error message. */
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Problem Opening File!";
@@ -200,12 +296,45 @@ void readALLTypeEffectiveness()
         /* If token is StartElement, we'll see if we can read it.*/
         if(token == QXmlStreamReader::StartElement) {
             /* If it's named persons, we'll go to the next.*/
-            if(xml.name() == "circuit") {
+            if(xml.name() == "effect") {
                 continue;
             }
             /* If it's named person, we'll dig the information from there.*/
-            if(xml.name() == "gate") {
-                //addGate(xml);
+            if(xml.name() == "attack") {
+                while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                        xml.name() == "attack"))
+                {
+                    if(xml.tokenType() == QXmlStreamReader::StartElement) {
+                        if(xml.name() == "name")
+                        {
+                            attackType = xml.readElementText();
+                        }
+                        else if(xml.name() == "victim")
+                        {
+                            while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                                    xml.name() == "victim"))
+                            {
+                                if(xml.tokenType() == QXmlStreamReader::StartElement) {
+                                    if(xml.name() == "type")
+                                    {
+                                        victimType = xml.readElementText();
+                                    }
+                                    else if(xml.name() == "modifier")
+                                    {
+                                        modifier = xml.readElementText();
+                                    }
+                                }
+                                /* ...and next... */
+                                xml.readNext();
+                            }
+                            QString statement = "INSERT INTO TypeEffectiveness (AttackType, VictimType, Modifier) values('" + attackType + "', '" + victimType + "', '" + modifier + "')";
+                            query.exec(statement);
+                            qDebug() << "Command: " << statement;
+                        }
+                    }
+                    /* ...and next... */
+                    xml.readNext();
+                }
             }
         }
     }
@@ -216,6 +345,13 @@ void readALLTypeEffectiveness()
     /* Removes any device() or data from the reader
      * and resets its internal state to the initial state. */
     xml.clear();
+    QString statement = "SELECT * FROM TypeEffectiveness";
+    query.exec(statement);
+    qDebug() << "Command2: " << statement ;
+    while( query.next() )
+    {
+        qDebug() << "Result: " << query.record().field("VictimType").value().toString();
+    }
 }
 
 bool validateXML()
@@ -296,7 +432,8 @@ bool validateXML()
 void clearTables()
 {
     // clear all tables
-    QSqlQuery queryToDelete;
-    queryToDelete.exec("DELETE FROM Trainers");
-    queryToDelete.exec("DELETE FROM CaughtPokemon");
+    QSqlQuery queryToDelete;    
+    queryToDelete.exec("DELETE FROM Moves");
+    queryToDelete.exec("DELETE FROM TypeEffectiveness");
+    queryToDelete.exec("DELETE FROM Pokedex");
 }
