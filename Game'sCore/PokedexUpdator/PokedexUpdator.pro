@@ -1,15 +1,16 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2013-11-25T22:49:48
+# Project created by QtCreator 2013-12-10T21:03:29
 #
 #-------------------------------------------------
 
 QT       += core
 QT       += sql
+QT       += xml
+QT       += xmlpatterns
 QT       -= gui
-QT       += network
 
-TARGET = WebmonServer
+TARGET = PokedexUpdator
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -17,11 +18,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    databaseConversation.cpp \
-    gamemechanics.cpp \
-    server.cpp
+    xmltodatabase.cpp
 
 HEADERS += \
-    databaseConversation.h \
-    gamemechanics.h \
-    server.h
+    xmltodatabase.h \
+    xmltodatabase.h

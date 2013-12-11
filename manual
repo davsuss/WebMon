@@ -1,0 +1,8 @@
+This exe will update the core database with any updates made to the xml file.
+No need to always run this exe.
+
+To run:
+1) run exe
+2) arguments -n if first time running, -o if core db file already exists
+3) check if the db file is created
+4) move to appropriate sections: /databases and where the webmon server's exe is located
