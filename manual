@@ -1,7 +1,7 @@
 This exe will update the core database with any updates made to the xml file.
 No need to always run this exe.
 
-To run:
+To run updates on pokedex (Moves, New Pokemon, or Types):
 1) run exe
 2) arguments -n if first time running, -o if core db file already exists
 3) check if the db file is created
