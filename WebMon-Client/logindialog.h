@@ -13,7 +13,9 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
-
+    int GetPort();
+    QString GetHost();
+    QString GetTrainerName();
 signals:
    void connected();
 private:

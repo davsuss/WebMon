@@ -1,5 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "logindialog.h"
+#include "QDebug"
+MainWindow::MainWindow(QString Host, int Port, QString TrainerName)
+{
+    MainWindow(0);
+    qDebug() << Host;
+    qDebug() << Port;
+    qDebug() << TrainerName;
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(new BattleForm());
     ui->BattleGroupBox->setLayout(layout);
-
 }
 
 MainWindow::~MainWindow()

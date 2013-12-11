@@ -7,6 +7,7 @@ class DataStore : public QObject
 {
     Q_OBJECT
 public:
+    void Connect(QString host, int Port,QString trainer);
     explicit DataStore(QObject *parent = 0);
     QString getGif(QString pokemon);
 

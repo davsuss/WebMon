@@ -12,3 +12,15 @@ LoginDialog::~LoginDialog()
 {
     delete ui;
 }
+QString LoginDialog::GetHost()
+{
+    return ui->HostLineEdit->text();
+}
+int LoginDialog::GetPort()
+{
+    return ui->PortLineEdit->text().toInt();
+}
+QString LoginDialog::GetTrainerName()
+{
+    return ui->TrainerLineEdit->text();
+}

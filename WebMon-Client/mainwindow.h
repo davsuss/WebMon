@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    MainWindow(QString Host,int Port, QString TrainerName);
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void setGif(QString gif,QLabel* label);
