@@ -1,3 +1,6 @@
+PROJECT NOT DONE YET!
+Estimated Completion Date: 12/12/2013
+
 Project Title
 
 contributors: bishwa9, davsuss
