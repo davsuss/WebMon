@@ -91,7 +91,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="Close">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -104,7 +104,7 @@
     <string>Close</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="Connect">
    <property name="geometry">
     <rect>
      <x>170</x>

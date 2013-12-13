@@ -17,7 +17,10 @@ public:
     QString GetHost();
     QString GetTrainerName();
 signals:
-   void connected();
+    void ConnectSignal();
+private slots:
+    void ConnectRequested();
+
 private:
     Ui::LoginDialog *ui;
 };

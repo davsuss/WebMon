@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 #include "mainwindow.h"
 #include "logindialog.h"
+#include "datastore.h"
 #include "Structs.h"
 #include <QObject>
 typedef enum {PlayerTurn,waiting} EncounterState;
@@ -12,11 +13,15 @@ class Controller : public QObject
     Q_OBJECT
 public:
     explicit Controller(QObject *parent = 0);
+    void setDialog(LoginDialog* d);
+    void setData(DataStore * data);
 public slots:
-    void Connect(QString host, int Port,QString trainer);
     void ServerResponse(QString response);
+    void ConnectSucessful();
+    void ConnectFailure();
+    void ConnectDisconnect();
 private slots:
-    void DialogClosed();
+    void ConnectToServer();
 signals:
     void DisplayTrainer();
     void RandomFight();
@@ -29,6 +34,8 @@ private:
     bool PausedForRespose;
     LoginDialog* dialog;
     MainWindow* main;
+    DataStore* store;
+    bool connected;
 };
 
 #endif // CONTROLLER_H

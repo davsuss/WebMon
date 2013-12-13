@@ -6,6 +6,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
+    connect(ui->Connect,SIGNAL(clicked()),this,SLOT(ConnectRequested()));
 }
 
 LoginDialog::~LoginDialog()
@@ -23,4 +24,8 @@ int LoginDialog::GetPort()
 QString LoginDialog::GetTrainerName()
 {
     return ui->TrainerLineEdit->text();
+}
+void LoginDialog::ConnectRequested()
+{
+    emit ConnectSignal();
 }
