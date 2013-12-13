@@ -17,13 +17,13 @@ WaitingForm::~WaitingForm()
      {
         case(1):
         {
-         setGif(path + pokemon.name + "-Back.gif",ui->PokeImage1);
+         setGif(path + pokemon.name,ui->PokeImage1);
          ui->PokeInfo1->append(pokemon.info);
         break;
         }
         case(2):
         {
-         setGif(path + pokemon.name + "-Back.gif",ui->PokeImage2);
+         setGif(path + pokemon.name,ui->PokeImage2);
          ui->PokeInfo2->append(pokemon.info);
         break;
         }

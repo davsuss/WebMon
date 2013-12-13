@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setGif("Spr_2c_025.gif",ui->label_2);
     SetStatus("Please Connect to Server");
     //ShowWait(pk,pk);
-    SetBattle("Charmander","Charmander",2,2);
+    //SetBattle("Charmander","Charmander",2,2);
     setEnabled(false);
 }
 

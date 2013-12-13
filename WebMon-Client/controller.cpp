@@ -22,6 +22,11 @@ void Controller::setData(DataStore *data)
  connect(store,SIGNAL(connectionSucessful()),SLOT(ConnectSucessful()));
 
 }
+void Controller::setMain(MainWindow *main)
+{
+    this->main = main;
+}
+
 void Controller::ConnectToServer()
 {
 dialog->setEnabled(false);
@@ -43,20 +48,23 @@ void Controller::ServerResponse(QString response)
         PokemonWait pk1;
         pk1.name = pokemon1[0];
         pk1.info = "";
-        for(int i = 1; i < pokemon1.length();i++)
-        {
-            pk1.info += pokemon1[i];
-        }
+        pk1.info += "HP:" + pokemon1[1] + "\n";
+        pk1.info += "Level:" + pokemon1[2] + "\n";
+        pk1.info += "Move 1:" + pokemon1[3] + "\n";
+        pk1.info += "Move 2:" + pokemon1[4] + "\n";
+
         PokemonWait pk2;
         pk2.name = pokemon2[0];
         pk2.info = "";
-        for(int i = 1; i < pokemon2.length();i++)
-        {
-            pk2.info += pokemon2[i];
-        }
+        pk2.info += "HP:" + pokemon2[1] + "\n";
+        pk2.info += "Level:" + pokemon2[2] + "\n";
+        pk2.info += "Move 1:" + pokemon2[3] + "\n";
+        pk2.info += "Move 2:" + pokemon2[4] + "\n";
 
       main->ShowWait(pk1,pk2);
     }
+    else
+    {qDebug() << response;}
 }
 
 void Controller::ConnectDisconnect()

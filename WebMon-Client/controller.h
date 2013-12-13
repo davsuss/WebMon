@@ -15,6 +15,7 @@ public:
     explicit Controller(QObject *parent = 0);
     void setDialog(LoginDialog* d);
     void setData(DataStore * data);
+    void setMain(MainWindow* main);
 public slots:
     void ServerResponse(QString response);
     void ConnectSucessful();

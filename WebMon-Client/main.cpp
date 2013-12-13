@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     LoginDialog *d = new LoginDialog();
     c.setDialog(d);
     c.setData(data);
+    c.setMain(w);
     d->show();
     return a.exec();
 }

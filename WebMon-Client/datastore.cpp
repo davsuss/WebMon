@@ -18,7 +18,7 @@ DataStore::DataStore(QObject *parent) :
        if (ipAddress.isEmpty())
            ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 tcpSocket = new QTcpSocket(this);
-
+connect(tcpSocket, SIGNAL(readyRead()),this,SLOT(DataRecieved()));
 connect(tcpSocket, SIGNAL(connected()), this, SLOT(connectSuccess()));
 connect(tcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(connectFaliure()));
 connect(tcpSocket,SIGNAL(disconnected()),this,SLOT(connectDisconnected()));
@@ -63,7 +63,7 @@ void DataStore::connectSuccess()
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
     tcpSocket->write(block);
-
+    emit connectionSucessful();
 }
 bool DataStore::Connect(QString host, int Port, QString trainer)
 {
