@@ -69,4 +69,11 @@
 <baseDamage>200</baseDamage>
 <Accuracy>50</Accuracy>
 </move>
+<move>
+<name>Destruction by Super Hyper Laughter</name>
+<type>Undefined</type>
+<pp>1</pp>
+<baseDamage>300</baseDamage>
+<Accuracy>50</Accuracy>
+</move>
 </moves>

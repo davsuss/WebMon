@@ -7,14 +7,18 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDebug>
+#include <QStringList>
 
 #include <QFile>
 #include <QtXmlPatterns/QXmlSchema>
 #include <QtXml/QXmlStreamReader>
 #include <QtXmlPatterns/QXmlSchemaValidator>
 
+#include "constants.h"
+#include "gamemechanics.h"
+
 // connect to game.db
-bool connect();
+bool connectToDB();
 
 // dynamic database
 // Trainers and Caught/trained pokemon
@@ -32,10 +36,11 @@ bool changeNumOfPokemonCaught(QString name, int num);
 
 // caught pokemon accessors
 // return number of pokemon caught by the particular trainer
-int addCaughtPokemon(QString trainer, int PID, int attackEV, int defEV, int speedEV, int HPEV, int exp, QString moves);
-bool accessAllCaughtPokemon(QString trainerName, QSqlRecord *recs);
+int addCaughtPokemon(QString trainer, int HP, int PID, int attackEV, int defEV, int speedEV, int HPEV, int exp, QString moves);
+QMap<QString, pokemonStruct>  accessAllCaughtPokemon(QString trainerName);
+void clearAllCaughtPokemon(QString trainerName);
 
-// access static database objects
+// access static database object
 // pokemons from pokedex
 bool accessPokemon(QString PokemonName, QSqlRecord &rec);
 QString accessHelper(QString pokemonName, QString column);
@@ -51,6 +56,9 @@ int getSpeedYield(QString pokemonName);
 int getHPYield(QString pokemonName);
 int getEXPYield(QString pokemonName);
 int getEvolveLevel(QString pokemonName);
+QString getEvolveTo(QString pokemonName);
+QList<QString> getEvolChain(QString pokemonName);
+int numberOfPokemon();
 
 // damage modifiers
 double accessDamageModifer(QString attackType, QString victimType);
@@ -62,5 +70,9 @@ QString getMoveType(QString MoveName);
 int getDamage(QString MoveName);
 int getAccuracy(QString MoveName);
 int getPP(QString MoveName);
+QList<QString> MovesOfType(QString Type);
+
+// types
+QList<QString> getAllTypes();
 
 #endif // XMLTODATABASE_H

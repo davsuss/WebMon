@@ -1,12 +1,10 @@
 #include "databaseConversation.h"
 
-QString staticdatabase = "./databases/game.db";
-QString dynamicdatabase = "./databases/saveData.db";
 // TELLS QT LIBS ABOUT DATABASE
 QSqlDatabase Static;
 QSqlDatabase Dynamic;
 
-bool connect()
+bool connectToDB()
 {
     Static = QSqlDatabase::addDatabase("QSQLITE", "Static");
     Dynamic = QSqlDatabase::addDatabase("QSQLITE", "Dynamic");
@@ -56,7 +54,7 @@ void createTables()
        qDebug() << "Run the server with -reset as an argument...";
     }
 
-    if( !query.exec("CREATE TABLE CaughtPokemon(CPID INTEGER primary key, trainer varchar(20), PID INTEGER, AtEV INTEGER, DefEV INTEGER, speedEV INTEGER, HPEV INTEGER, EXP INTEGER, Moves varchar(30))") )
+    if( !query.exec("CREATE TABLE CaughtPokemon(CPID INTEGER primary key, trainer varchar(20), PID INTEGER, AtEV INTEGER, DefEV INTEGER, speedEV INTEGER, HPEV INTEGER, EXP INTEGER, HP INTEGER, Moves varchar(60))") )
     {
         qDebug() << query.lastError().databaseText();
         qDebug() << "Run the server with -reset as an argument...";
@@ -196,7 +194,7 @@ bool changeNumOfPokemonCaught(QString name, int num)
     }
 }
 
-int addCaughtPokemon(QString trainer, int PID, int attackEV, int defEV, int speedEV, int HPEV, int exp, QString moves)
+int addCaughtPokemon(QString trainer, int HP, int PID, int attackEV, int defEV, int speedEV, int HPEV, int exp, QString moves)
 {
     // search for trainer first
     QSqlRecord rec;
@@ -204,7 +202,7 @@ int addCaughtPokemon(QString trainer, int PID, int attackEV, int defEV, int spee
     if( created )
     {
         QSqlQuery query(Dynamic);
-        QString statement = "INSERT INTO CaughtPokemon(trainer, PID, AtEV, DefEV, speedEV, HPEV, EXP, Moves) values('" + trainer + "', " + QString::number(PID) + ", " + QString::number(attackEV) + ", " + QString::number(defEV) + ", " + QString::number(speedEV) + ", " + QString::number(HPEV) + ", " + QString::number(exp) + ", '" + moves + "')";
+        QString statement = "INSERT INTO CaughtPokemon(trainer, PID, AtEV, DefEV, speedEV, HPEV, EXP, HP, Moves) values('" + trainer + "', " + QString::number(PID) + ", " + QString::number(attackEV) + ", " + QString::number(defEV) + ", " + QString::number(speedEV) + ", " + QString::number(HPEV) + ", " + QString::number(exp) + ", " + QString::number(HP) + ", '" + moves + "')";
         if( !query.exec(statement) )
         {
             qDebug() << query.lastError().databaseText();
@@ -229,25 +227,59 @@ int addCaughtPokemon(QString trainer, int PID, int attackEV, int defEV, int spee
     }
 }
 
-bool accessAllCaughtPokemon(QString trainerName, QSqlRecord *recs)
+QMap<QString, pokemonStruct> accessAllCaughtPokemon(QString trainerName)
 {
+    QMap<QString, pokemonStruct> data;
     QSqlQuery query(Dynamic);
     QString statement = "SELECT * FROM CaughtPokemon WHERE trainer='" + trainerName + "'";
     if( !query.exec(statement) )
     {
         qDebug() << query.lastError().databaseText();
-        return false;
+        return data;
     }
-    bool res = false;
     while( query.next() )
-    {
-        *recs = query.record();
-        recs++;
-        res = true;
+    {        
+        pokemonStruct saved;
+        saved.PID = query.record().field("PID").value().toInt();
+        saved.attEV = query.record().field("AtEV").value().toInt();
+        saved.CPID = query.record().field("CPID").value().toInt();
+        saved.defEV = query.record().field("DefEV").value().toInt();
+        saved.EXP = query.record().field("EXP").value().toInt();
+        saved.HPEV = query.record().field("HPEV").value().toInt();
+        saved.speedEV = query.record().field("speedEV").value().toInt();
+        saved.HP = query.record().field("HP").value().toInt();
+        saved.level = getLevel(saved.EXP);
+        saved.name = getPokemonName(QString::number(saved.PID));
+        saved.attack = getStat(saved.attEV, getBaseAtt(saved.name), saved.level);
+        saved.defense = getStat(saved.defEV, getBaseDef(saved.name), saved.level);
+        saved.speed = getStat(saved.speedEV, getBaseSpeed(saved.name), saved.level);
+        saved.HP = getHP(saved.HPEV, getBaseHP(saved.name), saved.level);
+        QString moves = query.record().field("Moves").value().toString();
+        QStringList l = moves.split("|");
+        for(int i = 0; i < l.size(); i++)
+        {
+            QStringList m = l[i].split(".");
+            moveStruct move;
+            move.name = m[0];
+            move.pp = m[1].toInt();
+            move.accuracy = getAccuracy(move.name);
+            move.damage = getDamage(move.name);
+            move.type = getMoveType(move.name);
+            saved.moves.append(move);
+        }
+        data.insert(saved.name, saved);
     }
-    return res;
+    return data;
 }
 
+void clearAllCaughtPokemon(QString trainerName)
+{
+    QSqlQuery query(Dynamic);
+    if( !query.exec("DELETE FROM CaughtPokemon WHERE trainer='" + trainerName + "'"))
+    {
+        qDebug() << query.lastError().databaseText();
+    }
+}
 
 // access static database objects
 // pokemons from pokedex
@@ -347,6 +379,48 @@ int getEvolveLevel(QString pokemonName)
 {
     return accessHelper(pokemonName, "evolveLevel").toInt();
 }
+QString getEvolveTo(QString pokemonName)
+{
+    int id = accessHelper(pokemonName, "evolveTo").toInt();
+    return getPokemonName(QString::number(id));
+}
+QList<QString> getEvolChain(QString pokemonName)
+{
+    QString chain = accessHelper(pokemonName, "evolutionaryChain");
+    QList<QString> c;
+    if( chain.contains(',') )
+    {
+        QStringList l = chain.split(",");
+
+        for( int i = 0; i < l.size(); i++ )
+        {
+            c.append(l[i]);
+        }
+    }
+    else
+    {
+        c.append(chain);
+    }
+    return c;
+}
+int numberOfPokemon()
+{
+    QSqlQuery query(Static);
+    if( query.exec("SELECT * FROM Pokedex") )
+    {
+        int number = 0;
+        while( query.next() )
+        {
+            number++;
+        }
+        return number;
+    }
+    else
+    {
+        qDebug() << query.lastError().databaseText();
+        return 0;
+    }
+}
 
 // damage modifiers
 double accessDamageModifer(QString attackType, QString victimType)
@@ -404,18 +478,59 @@ QString accessHelperMove(QString MoveName, QString column)
 }
 QString getMoveType(QString MoveName)
 {
-    QString result = accessHelper(MoveName, "Type");
+    QString result = accessHelperMove(MoveName, "Type");
     return (result == "-1") ? "" : result;
 }
 int getDamage(QString MoveName)
 {
-    return accessHelper(MoveName, "Damage").toInt();
+    return accessHelperMove(MoveName, "Damage").toInt();
 }
 int getAccuracy(QString MoveName)
 {
-    return accessHelper(MoveName, "Accuracy").toInt();
+    return accessHelperMove(MoveName, "Accuracy").toInt();
 }
 int getPP(QString MoveName)
 {
-    return accessHelper(MoveName, "PP").toInt();
+    return accessHelperMove(MoveName, "PP").toInt();
+}
+
+QList<QString> MovesOfType(QString Type)
+{
+    QList<QString> allMoves;
+    QSqlQuery query(Static);
+    if( query.exec("SELECT (Name) FROM Moves WHERE Type='" + Type + "'"))
+    {
+        while( query.next() )
+        {
+            allMoves.append(query.record().field("Name").value().toString());
+        }
+    }
+    else
+    {
+        qDebug() << query.lastError().databaseText();
+        allMoves.clear();
+    }
+    return allMoves;
+}
+
+QList<QString> getAllTypes()
+{
+    QList<QString> allTypes;
+    QSqlQuery query(Static);
+    if( query.exec("SELECT (Type) FROM Pokedex"))
+    {
+        while(query.next())
+        {
+            QString type = query.record().field("Type").value().toString();
+            if( !allTypes.contains(type) )
+            {
+                allTypes.append(type);
+            }
+        }
+    }
+    else
+    {
+        qDebug() << query.lastError().databaseText();
+    }
+    return allTypes;
 }

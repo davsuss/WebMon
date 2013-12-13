@@ -16,11 +16,20 @@ void createTables()
     // create tables
     QSqlQuery query;
 
-    query.exec("create table Moves(moveid integer primary key, Name varchar(20), Type varchar(20), PP integer, Damage integer, Accuracy integer)");
+    if( !query.exec("create table Moves(moveid integer primary key, Name varchar(20), Type varchar(20), PP integer, Damage integer, Accuracy integer)") )
+    {
+        qDebug() << query.lastError().databaseText();
+    }
 
-    query.exec("create table TypeEffectiveness(teid integer primary key, AttackType varchar(20), VictimType varchar(20), Modifier varchar(20))");
+    if( !query.exec("create table TypeEffectiveness(teid integer primary key, AttackType varchar(20), VictimType varchar(20), Modifier varchar(20))") )
+    {
+        qDebug() << query.lastError().databaseText();
+    }
 
-    query.exec("create table Pokedex(pid integer primary key, Name varchar(20), Type varchar(20), BaseAtt integer, BaseDef integer, BaseSpeed integer, BaseHP integer, AtEVyield integer, DefEVyield integer, speedEVyield integer, HPEVyield integer, EXPyield integer, evolveLevel integer)");
+    if( !query.exec("create table Pokedex(pid integer primary key, Name varchar(20), Type varchar(20), BaseAtt integer, BaseDef integer, BaseSpeed integer, BaseHP integer, AtEVyield integer, DefEVyield integer, speedEVyield integer, HPEVyield integer, EXPyield integer, evolveLevel integer, evolveTo integer, evolutionaryChain varchar(50))") )
+    {
+        qDebug() << query.lastError().databaseText();
+    }
     /**/
 }
 
@@ -140,6 +149,7 @@ void readALLMoves()
 
 void readALLPokemon()
 {
+    QString id;
     QString pokemonName;
     QString pokemonType;
     QString attack;
@@ -152,6 +162,8 @@ void readALLPokemon()
     QString HPYield;
     QString expYield;
     QString levelToEvolve;
+    QString pokemonthisWillEvolveTo;
+    QString chain;
     QSqlQuery query;
     /* We'll parse the example.xml */
     QFile* file = new QFile("./xmlFiles/AllPokemon.xml");
@@ -193,7 +205,7 @@ void readALLPokemon()
 
                         if(xml.name() == "ID")
                         {
-
+                            id = xml.readElementText();
                         }
                         else if(xml.name() == "name")
                         {
@@ -243,17 +255,25 @@ void readALLPokemon()
                         {
                             levelToEvolve = xml.readElementText();
                         }
+                        else if(xml.name() == "evolveTo")
+                        {
+                            pokemonthisWillEvolveTo = xml.readElementText();
+                        }
+                        else if(xml.name() == "evolutionaryChain")
+                        {
+                            chain = xml.readElementText();
+                        }
                     }
                     /* ...and next... */
                     xml.readNext();
                 }
-                QString statement = "INSERT INTO Pokedex (Name, Type, BaseAtt, BaseDef, BaseSpeed, BaseHP, AtEVyield, DefEVyield, speedEVyield, HPEVyield, EXPyield, evolveLevel) values('"
+                QString statement = "INSERT INTO Pokedex (pid, Name, Type, BaseAtt, BaseDef, BaseSpeed, BaseHP, AtEVyield, DefEVyield, speedEVyield, HPEVyield, EXPyield, evolveLevel, evolveTo, evolutionaryChain) values(" + id + ", '"
                         + pokemonName + "', '" + pokemonType + "', " + attack + ", " + defense
                         + ", " + speed + ", " + HP + ", " + attackYield + ", " + defenseYield + ", " + speedYield
-                        + ", " + HPYield + ", " + expYield + ", " + levelToEvolve + ")";
+                        + ", " + HPYield + ", " + expYield + ", " + levelToEvolve + ", " + pokemonthisWillEvolveTo + ", '" + chain + "')";
                 if( !query.exec(statement) )
                 {
-                    qDebug() << query.lastError().databaseText();
+                    //qDebug() << query.lastError().databaseText();
                     return;
                 }
             }
@@ -270,7 +290,7 @@ void readALLPokemon()
     query.exec(statement);
     while( query.next() )
     {
-        qDebug() << "Added to Pokedex: " << query.record().field("Name").value().toString() << " Will evolve at: " << query.record().field("evolveLevel").value().toString();
+        qDebug() << "Added to Pokedex: " << query.record().field("pid").value().toString() << " " << query.record().field("Name").value().toString() << " Will evolve at: " << query.record().field("evolveLevel").value().toString() << " in evolutionary chain " << query.record().field("evolutionaryChain").value().toString();
     }
 }
 
@@ -356,7 +376,7 @@ void readALLTypeEffectiveness()
     query.exec(statement);
     while( query.next() )
     {
-        qDebug() << "Added to TypeEffectiveness table: " << query.record().field("VictimType").value().toString();
+        qDebug() << "Added to TypeEffectiveness table: " << query.record().field("AttackType").value().toString() << " " << query.record().field("VictimType").value().toString();
     }
     qDebug() << "****************If no 'Added to TypeEffectiveness table' shown... problem!****************";
 }
@@ -366,6 +386,11 @@ bool validateXML()
     // validate the allPokemons.xml
     QFile schemaFile("./xmlFiles/AllPokemon.xsd");
     bool open = schemaFile.open(QIODevice::ReadOnly);
+    if( !open )
+    {
+        qDebug() << "Couldn't open AllPokemon.xsd";
+        return false;
+    }
     QXmlSchema schema;
     schema.load(&schemaFile, QUrl::fromLocalFile(schemaFile.fileName()));
 
@@ -373,6 +398,12 @@ bool validateXML()
     {
         QFile xmlFile("./xmlFiles/AllPokemon.xml");
         open = xmlFile.open(QIODevice::ReadOnly);
+
+        if( !open )
+        {
+            qDebug() << "Couldn't open AllPokemon.xml";
+            return false;
+        }
 
         QXmlSchemaValidator validator( schema );
 
@@ -390,6 +421,11 @@ bool validateXML()
     // validate the moves.xml
     QFile schemaFile1("./xmlFiles/moves.xsd");
     open = schemaFile1.open(QIODevice::ReadOnly);
+    if( !open )
+    {
+        qDebug() << "Couldn't open moves.xsd";
+        return false;
+    }
     QXmlSchema schema1;
     schema1.load(&schemaFile1, QUrl::fromLocalFile(schemaFile1.fileName()));
 
@@ -397,6 +433,12 @@ bool validateXML()
     {
         QFile xmlFile1("./xmlFiles/moves.xml");
         open = xmlFile1.open(QIODevice::ReadOnly);
+
+        if( !open )
+        {
+            qDebug() << "Couldn't open moves.xml";
+            return false;
+        }
 
         QXmlSchemaValidator validator1( schema1 );
 
@@ -414,6 +456,11 @@ bool validateXML()
     // validate the typeEffectiveness.xml
     QFile schemaFile2("./xmlFiles/typeEffectiveness.xsd");
     open = schemaFile2.open(QIODevice::ReadOnly);
+    if( !open )
+    {
+        qDebug() << "Couldn't open typeEffectiveness.xsd";
+        return false;
+    }
     QXmlSchema schema2;
     schema2.load(&schemaFile2, QUrl::fromLocalFile(schemaFile2.fileName()));
 
@@ -421,6 +468,12 @@ bool validateXML()
     {
         QFile xmlFile2("./xmlFiles/typeEffectiveness.xml");
         open = xmlFile2.open(QIODevice::ReadOnly);
+
+        if( !open )
+        {
+            qDebug() << "Couldn't open typeEffectiveness.xml";
+            return false;
+        }
 
         QXmlSchemaValidator validator2( schema2 );
 
@@ -434,15 +487,16 @@ bool validateXML()
     {
         return false;
     }
+    return true;
 }
 
 void clearTables()
 {
     // clear and delete all tables
     QSqlQuery queryToDelete;
-    bool worked = queryToDelete.exec("DELETE FROM Moves") || queryToDelete.exec("DELETE FROM TypeEffectiveness") ||
-                    queryToDelete.exec("DELETE FROM Pokedex") || queryToDelete.exec("DROP TABLE Moves") ||
-                    queryToDelete.exec("DROP TABLE TypeEffectiveness") || queryToDelete.exec("DROP TABLE Pokedex");
+    bool worked = queryToDelete.exec("DELETE FROM Moves") && queryToDelete.exec("DELETE FROM TypeEffectiveness") &&
+                    queryToDelete.exec("DELETE FROM Pokedex") && queryToDelete.exec("DROP TABLE Moves") &&
+                    queryToDelete.exec("DROP TABLE TypeEffectiveness") && queryToDelete.exec("DROP TABLE Pokedex");
     if( !worked )
     {
         qDebug() << queryToDelete.lastError().databaseText();

@@ -13,6 +13,8 @@
 <SpeedYield>1</SpeedYield>
 <EXPYield>63</EXPYield>
 <evolveLevel>5</evolveLevel>
+<evolveTo>2</evolveTo>
+<evolutionaryChain>1,2,3</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>2</ID>
@@ -28,6 +30,8 @@
 <SpeedYield>1</SpeedYield>
 <EXPYield>142</EXPYield>
 <evolveLevel>10</evolveLevel>
+<evolveTo>3</evolveTo>
+<evolutionaryChain>1,2,3</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>3</ID>
@@ -43,6 +47,8 @@
 <SpeedYield>2</SpeedYield>
 <EXPYield>240</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>1,2,3</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>4</ID>
@@ -58,6 +64,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>63</EXPYield>
 <evolveLevel>5</evolveLevel>
+<evolveTo>5</evolveTo>
+<evolutionaryChain>4,5,6</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>5</ID>
@@ -73,6 +81,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>142</EXPYield>
 <evolveLevel>10</evolveLevel>
+<evolveTo>6</evolveTo>
+<evolutionaryChain>4,5,6</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>6</ID>
@@ -88,6 +98,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>239</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>4,5,6</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>7</ID>
@@ -103,6 +115,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>64</EXPYield>
 <evolveLevel>5</evolveLevel>
+<evolveTo>8</evolveTo>
+<evolutionaryChain>7,8,9</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>8</ID>
@@ -118,6 +132,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>142</EXPYield>
 <evolveLevel>10</evolveLevel>
+<evolveTo>9</evolveTo>
+<evolutionaryChain>7,8,9</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>9</ID>
@@ -133,6 +149,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>236</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>7,8,9</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>10</ID>
@@ -147,7 +165,9 @@
 <DefenseYield>0</DefenseYield>
 <SpeedYield>1</SpeedYield>
 <EXPYield>60</EXPYield>
-<evolveLevel>12</evolveLevel>
+<evolveLevel>10</evolveLevel>
+<evolveTo>11</evolveTo>
+<evolutionaryChain>10,11</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>11</ID>
@@ -163,6 +183,8 @@
 <SpeedYield>2</SpeedYield>
 <EXPYield>177</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>10,11</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>12</ID>
@@ -178,6 +200,8 @@
 <SpeedYield>1</SpeedYield>
 <EXPYield>42</EXPYield>
 <evolveLevel>12</evolveLevel>
+<evolveTo>13</evolveTo>
+<evolutionaryChain>12,13</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>13</ID>
@@ -193,6 +217,8 @@
 <SpeedYield>0</SpeedYield>
 <EXPYield>189</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>12,13</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>14</ID>
@@ -208,6 +234,8 @@
 <SpeedYield>1</SpeedYield>
 <EXPYield>63</EXPYield>
 <evolveLevel>8</evolveLevel>
+<evolveTo>15</evolveTo>
+<evolutionaryChain>14,15</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>15</ID>
@@ -223,6 +251,8 @@
 <SpeedYield>2</SpeedYield>
 <EXPYield>174</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>14,15</evolutionaryChain>
 </pokemon>
 <pokemon>
 <ID>16</ID>
@@ -238,5 +268,7 @@
 <SpeedYield>1</SpeedYield>
 <EXPYield>250</EXPYield>
 <evolveLevel>-1</evolveLevel>
+<evolveTo>-1</evolveTo>
+<evolutionaryChain>16</evolutionaryChain>
 </pokemon>
 </pokedex>

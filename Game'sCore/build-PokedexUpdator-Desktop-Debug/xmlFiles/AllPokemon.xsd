@@ -29,6 +29,8 @@
                 <xs:element name="SpeedYield" type="xs:integer"/>
                 <xs:element name="EXPYield" type="xs:integer"/>
                 <xs:element name="evolveLevel" type="xs:integer"/>
+		<xs:element name="evolveTo" type="xs:integer"/>
+		<xs:element name="evolutionaryChain" type="xs:string"/>
 		</xs:sequence>
         </xs:complexType>
 

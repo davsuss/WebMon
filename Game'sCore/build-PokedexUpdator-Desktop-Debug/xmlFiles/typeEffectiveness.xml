@@ -3,7 +3,7 @@
 <name>Grass</name>
 <victim>
 	<type>Grass</type>
-	<modifier>0.5</modifier>
+	<modifier>1</modifier>
 </victim>
 <victim>        
         <type>Fire</type>
@@ -26,7 +26,7 @@
 </victim>       
 <victim>
         <type>Fire</type>
-        <modifier>0.5</modifier>
+        <modifier>1</modifier>
 </victim>
 <victim>
         <type>Water</type>
@@ -49,7 +49,7 @@
 </victim>
 <victim>
         <type>Water</type>
-        <modifier>0.5</modifier>
+        <modifier>1</modifier>
 </victim>
 <victim>
         <type>Undefined</type>
