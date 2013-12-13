@@ -137,6 +137,7 @@ void trainer::handleCommand(QString command)
                 {
                     movePlayed = m_pokemons[m_memberinBattle].moves[i];
                     present = true;
+                    i--;
                 }
             }
             if( present )
