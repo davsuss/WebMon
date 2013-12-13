@@ -27,16 +27,21 @@ void Controller::ServerResponse(QString response)
         //Needs a switch statement about the Encounter State
         switch(encounter)
         {
-        case INIT:
-        {}
-        case EnemyTurn:
-        {}
         case PlayerTurn:
-        {}
+        {
+        }
         case waiting:
-        {}
+        {
+        //We got the info from the server
+
+        }
         }
         break;
         }
     }
+}
+void Controller::DialogClosed()
+{
+       QString host = dialog->GetHost();
+       QString port = dialog->GetPort();
 }

@@ -18,15 +18,19 @@ SOURCES += main.cpp\
     datastore.cpp \
     pokemon.cpp \
     controller.cpp \
-    logindialog.cpp
+    logindialog.cpp \
+    waitingform.cpp
 
 HEADERS  += mainwindow.h \
     battleform.h \
     datastore.h \
     pokemon.h \
     controller.h \
-    logindialog.h
+    logindialog.h \
+    waitingform.h \
+    Structs.h
 
 FORMS    += mainwindow.ui \
     battleform.ui \
-    logindialog.ui
+    logindialog.ui \
+    waitingform.ui

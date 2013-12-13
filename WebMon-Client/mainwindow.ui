@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>851</width>
+    <width>838</width>
     <height>483</height>
    </rect>
   </property>
@@ -17,40 +17,17 @@
    <widget class="QGroupBox" name="BattleGroupBox">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>50</y>
-      <width>591</width>
-      <height>311</height>
+      <x>30</x>
+      <y>60</y>
+      <width>631</width>
+      <height>301</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>211</width>
-      <height>221</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>120</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pokemon 0/6</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>360</x>
       <y>390</y>
       <width>111</width>
       <height>31</height>
@@ -63,33 +40,20 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
+      <x>210</x>
+      <y>390</y>
       <width>141</width>
-      <height>27</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Random-Encounter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>60</y>
-      <width>141</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Chanllenge Person</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>740</x>
+      <x>480</x>
       <y>390</y>
       <width>101</width>
       <height>31</height>
@@ -142,17 +106,20 @@
      <string>WebMon</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QLabel" name="Status">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>380</y>
-      <width>98</width>
-      <height>27</height>
+      <x>5</x>
+      <y>30</y>
+      <width>691</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Test Button</string>
+     <string>Current Status</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -161,7 +128,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>851</width>
+     <width>838</width>
      <height>25</height>
     </rect>
    </property>
