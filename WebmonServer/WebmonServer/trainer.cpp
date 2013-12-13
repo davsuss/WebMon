@@ -142,22 +142,24 @@ void trainer::handleCommand(QString command)
             if( present )
             {
                 moveResult resp = playMove(m_pokemons[m_memberinBattle], movePlayed, m_opposing[m_opposinginBattle]);
-                m_pokemons[m_memberinBattle].moves.insert(i, movePlayed);
+                m_pokemons[m_memberinBattle].moves.replace(i, movePlayed);
                 if( resp.enemyAlive && resp.meAlive )
                 {
-                    reply(encodeMoveResult(resp));
+                    reply("MoveResult:" + encodeMoveResult(resp));
                 }
                 else if( resp.meAlive  && !resp.enemyAlive)
                 {
                     int expLeft = growPokemon(m_pokemons[m_memberinBattle], m_opposing[m_opposinginBattle]);
                     reply("Won:" + encodeBattleResult(expLeft));
                     m_trainerState = idle;
+                    restorePkmn(m_pokemons[m_memberinBattle]);
                 }
                 else
                 {
                     int expLeft = levelUp(m_pokemons[m_memberinBattle]);
                     reply("Lost:" + encodeBattleResult(expLeft));
                     m_trainerState = idle;
+                    restorePkmn(m_pokemons[m_memberinBattle]);
                 }
             }
             else
@@ -167,7 +169,7 @@ void trainer::handleCommand(QString command)
         }
         else
         {
-            this->reply("id: " + this->m_id + " received urecognized command for a battle state: " + command + " can only play a move or quit!");
+            this->reply("ERROR: received urecognized command for a battle state: " + command + " can only play a move or quit!");
         }
         break;
     }

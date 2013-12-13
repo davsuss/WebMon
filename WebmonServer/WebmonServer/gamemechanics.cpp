@@ -5,7 +5,7 @@ bool generatePartyPkmn(QMap<QString, pokemonStruct> &curParty)
     srand(time(NULL));
     if( curParty.size() < partyLimit )
     {
-        int level = 1; // starting out so...
+        int level = 2; // starting out so...
         int id = genSpecial(); // check whether to get special pokemon
         if( id == -1 )// no special pokemon generated
         {
@@ -196,7 +196,7 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
     if( result.iWentFirst )
     { // pkmn1 goes first
         pkmn2.HP -= result.damageOnEnemy;
-        pkmn2.moves.insert(move, pkmn2move);
+        pkmn2.moves.replace(move, pkmn2move);
         if( pkmn2.HP <= 0 )
         {
             result.enemyAlive = false;
@@ -216,7 +216,7 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
     else
     { // pkmn2 goes first
         pkmn1.HP -= result.damageOnMe;
-        pkmn2.moves.insert(move, pkmn2move);
+        pkmn2.moves.replace(move, pkmn2move);
         if( pkmn1.HP <= 0 )
         {
             result.enemyAlive = true;
@@ -239,7 +239,7 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
 int growPokemon(pokemonStruct &pkmnVictor, pokemonStruct &pkmnLooser)
 {
     QString pkmnLost = pkmnLooser.name;
-    pkmnVictor.EXP += getEXPYield(pkmnLost);
+    pkmnVictor.EXP += (((double)getEXPYield(pkmnLost) * (double)(pkmnLooser.level * (100.0/(double)maxLevel)))/12.0);
     int expLeft = levelUp(pkmnVictor);
     evolve(pkmnVictor);
     if( pkmnVictor.attEV + pkmnVictor.defEV + pkmnVictor.speedEV + pkmnVictor.HPEV <= 100 )
@@ -301,10 +301,18 @@ int evolve(pokemonStruct &pkmn)
         return -1; // already filly evolved
     }
 }
+void restorePkmn(pokemonStruct pkmn)
+{
+    pkmn.HP = getHP(pkmn.HPEV, getBaseHP(pkmn.name), pkmn.level);
+    foreach(moveStruct m, pkmn.moves)
+    {
+        m.pp = getPP(m.name);
+    }
+}
 int damage(moveStruct moveUsed, pokemonStruct user, pokemonStruct victim)
 {
     double damage = ((double)((2* (user.level*(100/maxLevel))) + 10)) / 250.0;
-    damage *= (user.attack/victim.defense) * moveUsed.damage;
+    damage *= ((double)user.attack/(double)victim.defense) * (double)moveUsed.damage;
     damage += 2.0;
     damage *= accessDamageModifer(moveUsed.type,getPokemonType(victim.name));
     return qFloor(damage);
