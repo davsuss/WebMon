@@ -1,8 +1,27 @@
 This exe will update the core database with any updates made to the xml file.
 No need to always run this exe.
 
+BETA Version.
+
+Current Features:
+-Can create a team
+
+
 To run updates on pokedex (Moves, New Pokemon, or Types):
 1) run exe
 2) arguments -n if first time running, -o if core db file already exists
 3) check if the db file is created
 4) move to appropriate sections: /databases and where the webmon server's exe is located
+
+
+To run the server:
+1) navigate to the Webmon Server folder
+2) if the exe does not already exist, run a qmake and then make
+3) run the exe, a dialog should pop up.
+
+to run the client:
+1) navigate to the Webmon Client folder
+2) if the exe does not already exist, run a qmake and then make
+3) run the exe, two window should pop up.
+
+to run the clinet
