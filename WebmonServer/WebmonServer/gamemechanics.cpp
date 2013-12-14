@@ -315,7 +315,7 @@ int damage(moveStruct moveUsed, pokemonStruct user, pokemonStruct victim)
     damage *= ((double)user.attack/(double)victim.defense) * (double)moveUsed.damage;
     damage += 2.0;
     damage *= accessDamageModifer(moveUsed.type,getPokemonType(victim.name));
-    return qFloor(damage);
+    return floor(damage);
 }
 int getStat(int EV, int baseStat, int level)
 {
@@ -337,16 +337,17 @@ int getHP(int EV, int baseHP, int level)
 }
 int getLevel(int EXP)
 {
-    double n = (double)qPow(EXP, 1.0/3.0);
+    int n = floor(pow(EXP, 1.0/3.0) + 0.5);
     double d = (100.0/(double)maxLevel);
-    return n / d;
+    return (double)n / d;
 }
 int getEXP(int level)
 {
-    return qPow(level * (100/maxLevel), 3);
+    return pow(level * (100/maxLevel), 3);
 }
 void save(QString trainer, QMap<QString, pokemonStruct> dataToSave)
 {
+    qDebug() << "Saving: Don't turn off!";
     if( trainerExists(trainer) )
     {
         changeNumOfPokemonCaught(trainer, dataToSave.size());
@@ -362,6 +363,7 @@ void save(QString trainer, QMap<QString, pokemonStruct> dataToSave)
     {
         addCaughtPokemon(trainer, member.HP, member.PID, member.attEV, member.defEV, member.speedEV, member.HPEV, member.EXP, encodeMoves(member.moves));
     }
+    qDebug() << "Done Saving";
 }
 
 QString encodeMoves(QList<moveStruct> moves)

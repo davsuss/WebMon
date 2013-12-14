@@ -5,7 +5,7 @@
 #include "databaseConversation.h"
 #include <cstdlib>
 #include <time.h>
-#include <qmath.h>
+#include <cmath>
 
 // pokemon generations
 /***
