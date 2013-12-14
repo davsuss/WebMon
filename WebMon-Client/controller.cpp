@@ -61,13 +61,14 @@ void Controller::ServerResponse(QString response)
 {
     qDebug() << "Controller Recieved" << response;
     QList<QString> list = response.split(":");
-    QList<PokemonInfo>* pk = new QList<PokemonInfo>;
+
     if(list[0].startsWith("INIT",Qt::CaseInsensitive))
     {
         qDebug() << "Init Pokemon Team";
         QList<QString> pokemon1 = list[1].split("|");
         QList<QString> pokemon2 = list[2].split("|");
         PokemonInfo pk1;
+        QList<PokemonInfo>* pk = new QList<PokemonInfo>;
         pk1.name = pokemon1[0];
         pk1.expleft = pokemon1[1].toInt();
         pk1.level = pokemon1[2].toInt();
@@ -192,6 +193,7 @@ void Controller::ServerResponse(QString response)
         main->SetStatus("You Won!!");
         QList<QString> pokemon1 = list[2].split("|");
         QList<QString> pokemon2 = list[3].split("|");
+        QList<PokemonInfo>* pk = new QList<PokemonInfo>;
         PokemonInfo pk1;
         pk1.name = pokemon1[0];
         pk1.expleft = pokemon1[1].toInt();
@@ -218,6 +220,7 @@ void Controller::ServerResponse(QString response)
 
        QList<QString> pokemon1 = list[2].split("|");
        QList<QString> pokemon2 = list[3].split("|");
+       QList<PokemonInfo>* pk = new QList<PokemonInfo>;
        PokemonInfo pk1;
        pk1.name = pokemon1[0];
        pk1.expleft = pokemon1[1].toInt();
