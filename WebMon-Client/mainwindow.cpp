@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     btl = new BattleForm();
     waitingform = new WaitingForm();
-    connect(btl,SIGNAL(MoveSelect(QString)),this,SLOT(MoveSelect(QString)));
     connect(ui->RandomEncounter,SIGNAL(clicked()),this,SLOT(RandomBattle()));
     setGif("Spr_2c_025.gif",ui->label_2);
     SetStatus("Please Connect to Server");
@@ -39,7 +38,7 @@ void MainWindow::setGif(QString gif, QLabel *label)
 }
 void MainWindow::ShowWait(PokemonInfo pk1, PokemonInfo pk2)
 {
-ResetBattleForm();
+ResetBattleForm(btl);
 QGridLayout * layout = new QGridLayout();
 waitingform = new WaitingForm();
 layout->addWidget(waitingform);
@@ -47,11 +46,10 @@ ui->BattleGroupBox->setLayout(layout);
 waitingform->SetPokemon(1,pk1);
 waitingform->SetPokemon(2,pk2);
 }
-void MainWindow::ResetBattleForm()
+void MainWindow::ResetBattleForm(QWidget* forum)
 {
     if(ui->BattleGroupBox->layout() == 0)
         return;
-
     QLayoutItem * child;
     while((child = ui->BattleGroupBox->layout()->takeAt(0)) != 0)
     {
@@ -79,7 +77,9 @@ void MainWindow::updateBattle(PokemonInfo mine, PokemonInfo enemy)
 void MainWindow::SetBattle(PokemonInfo Mine,PokemonInfo enemy)
 {
     QGridLayout *layout = new QGridLayout;
-    ResetBattleForm();
+    ResetBattleForm(waitingform);
+    btl = new BattleForm();
+    connect(btl,SIGNAL(MoveSelect(QString)),this,SLOT(MoveSelect(QString)));
     btl->setFriendlyMaxHealth(Mine.hp);
     btl->setEnemyMaxHealth(enemy.hp);
     btl->setFriendlyGif(path + Mine.name + "-Back.gif");
@@ -96,8 +96,5 @@ emit RandomBattleSignal();
 }
 void MainWindow::ShowTeam(QList<QString> * list)
 {
-    for(int i = 0; i < 2; i++)
-    {
 
-    }
 }

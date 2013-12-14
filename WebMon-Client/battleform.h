@@ -30,6 +30,7 @@ public:
     void ReSetMoves(QList<QString>moves);
 private slots:
     void SendMove();
+    void Destroyed();
 signals:
     void MoveSelect(QString move);
 

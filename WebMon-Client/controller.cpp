@@ -189,10 +189,56 @@ void Controller::ServerResponse(QString response)
     else if(list[0].startsWith("Won",Qt::CaseInsensitive))
     {
         qDebug() << "You WON!!!!!";
+        main->SetStatus("You Won!!");
+        QList<QString> pokemon1 = list[2].split("|");
+        QList<QString> pokemon2 = list[3].split("|");
+        PokemonInfo pk1;
+        pk1.name = pokemon1[0];
+        pk1.expleft = pokemon1[1].toInt();
+        pk1.level = pokemon1[2].toInt();
+        pk1.hp = pokemon1[3].toInt();
+        pk1.moves.append(pokemon1[4]);
+        pk1.moves.append(pokemon1[5]);
+        pk->append(pk1);
+        PokemonInfo pk2;
+        pk2.name = pokemon2[0];
+        pk2.expleft = pokemon2[1].toInt();
+        pk2.level = pokemon2[2].toInt();
+        pk2.hp = pokemon2[3].toInt();
+        pk2.moves.append(pokemon2[4]);
+        pk2.moves.append(pokemon2[5]);
+        pk->append(pk2);
+      store->StorePokemon(pk);
+
+      main->ShowWait(pk1,pk2);
     }
     else if(list[0].startsWith("Lost",Qt::CaseInsensitive))
     {
-        qDebug() << "You Lost!!";
+       main->SetStatus("You Lost!!");
+
+       QList<QString> pokemon1 = list[2].split("|");
+       QList<QString> pokemon2 = list[3].split("|");
+       PokemonInfo pk1;
+       pk1.name = pokemon1[0];
+       pk1.expleft = pokemon1[1].toInt();
+       pk1.level = pokemon1[2].toInt();
+       pk1.hp = pokemon1[3].toInt();
+       pk1.moves.append(pokemon1[4]);
+       pk1.moves.append(pokemon1[5]);
+       pk->append(pk1);
+       PokemonInfo pk2;
+       pk2.name = pokemon2[0];
+       pk2.expleft = pokemon2[1].toInt();
+       pk2.level = pokemon2[2].toInt();
+       pk2.hp = pokemon2[3].toInt();
+       pk2.moves.append(pokemon2[4]);
+       pk2.moves.append(pokemon2[5]);
+       pk->append(pk2);
+     store->StorePokemon(pk);
+
+     main->ShowWait(pk1,pk2);
+
+
     }
     else
     {qDebug() << response;}

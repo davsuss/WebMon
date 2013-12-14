@@ -39,7 +39,7 @@ signals:
 private slots:
     void MoveSelect(QString move);
 private:
-    void ResetBattleForm();
+    void ResetBattleForm(QWidget* forum);
     Ui::MainWindow *ui;
     BattleForm * btl;
     WaitingForm* waitingform;

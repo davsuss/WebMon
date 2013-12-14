@@ -12,7 +12,6 @@ BattleForm::BattleForm(QWidget *parent) :
     QPixmap map(background);
     ui->Background->setPixmap(map);
     ui->Background->lower();
-
     ui->FriendlyHealth->setStyleSheet(progress);
     ui->EnemyHealth->setStyleSheet(progress);
     friendly = ui->FriendlySprite;
@@ -48,6 +47,11 @@ void BattleForm::setEnemyGif(QString gif)
 {
 setGif(gif,ui->EnemySprite);
 }
+void BattleForm::Destroyed()
+{
+    int i = 0;
+}
+
 void BattleForm::setFriendlyMaxHealth(int health)
 {
     ui->FriendlyHealth->setRange(0,health);
@@ -59,7 +63,7 @@ void BattleForm::setFriendlyMaxHealth(int health)
 void BattleForm::SetFriendlyHealth(int health)
 {
 ui->FriendlyHealth->setValue(health);
-ui->FriendHP->setText(QString(health + '/' + maxFriendlyHealth));
+ui->FriendHP->setText(QString("%1/%2").arg(health).arg(maxFriendlyHealth));
 }
 void BattleForm::setEnemyMaxHealth(int health)
 {
@@ -72,7 +76,7 @@ void BattleForm::setEnemyMaxHealth(int health)
 void BattleForm::SetEnemyHealth(int health)
 {
 ui->EnemyHealth->setValue(health);
-ui->EnemyHP->setText(QString(health + '/' + MaxEnemyHealth));
+ui->EnemyHP->setText(QString("%1/%2").arg(health).arg(MaxEnemyHealth));
 }
 void BattleForm::SendMove()
 {
