@@ -179,16 +179,16 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
 
     int probOfHit = pkmn1move.accuracy;
     int r = rand() % 100 + 1;
-    if( r < probOfHit ) // pkmn1's move lands
+    if( r < probOfHit && pkmn1move.pp > 0 ) // pkmn1's move lands
     {
         result.damageOnEnemy = damage(pkmn1move, pkmn1, pkmn2);
         pkmn1move.pp--;
     }
     probOfHit = pkmn2move.accuracy;
     r = rand() % 100 + 1;
-    if( r < probOfHit ) // pkmn1's move lands
+    if( r < probOfHit && pkmn2move.pp > 0 ) // pkmn1's move lands
     {
-        result.damageOnMe = damage(pkmn2move, pkmn2, pkmn1);
+        result.damageOnMe = damage(pkmn2move, pkmn2, pkmn1) / goEasyonDamage;
         pkmn2move.pp--;
     }
 
@@ -237,7 +237,7 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
 int growPokemon(pokemonStruct &pkmnVictor, pokemonStruct &pkmnLooser)
 {
     QString pkmnLost = pkmnLooser.name;
-    pkmnVictor.EXP += (((double)getEXPYield(pkmnLost) * (double)(pkmnLooser.level * (100.0/(double)maxLevel)))/12.0) * easy;
+    pkmnVictor.EXP += (((double)getEXPYield(pkmnLost) * (double)(pkmnLooser.level * (100.0/(double)maxLevel)))/7.0) * easyToGrow;
     int expLeft = levelUp(pkmnVictor);
     evolve(pkmnVictor);
     if( pkmnVictor.attEV + pkmnVictor.defEV + pkmnVictor.speedEV + pkmnVictor.HPEV <= 100 )
@@ -279,13 +279,13 @@ int evolve(pokemonStruct &pkmn)
     {
         if( levelToEvolve <= pkmn.level )
         {
-            QString evolveTo = getEvolveTo(pokemon); // pid it will evolve to
-            pkmn.name = getPokemonName(evolveTo);
+            int evolveTo = getEvolveTo(pokemon); // pid it will evolve to
+            pkmn.name = getPokemonName(QString::number(evolveTo));
             pkmn.attack = getBaseAtt(pkmn.name);
             pkmn.defense = getBaseDef(pkmn.name);
             pkmn.speed = getBaseSpeed(pkmn.name);
             pkmn.HP = getBaseHP(pkmn.name);
-            pkmn.PID = evolveTo.toInt();
+            pkmn.PID = evolveTo;
             levelToEvolve = getEvolveLevel(pkmn.name);
             return (levelToEvolve > 0) ? levelToEvolve - pkmn.level : -1;
         }

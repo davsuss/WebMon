@@ -379,10 +379,10 @@ int getEvolveLevel(QString pokemonName)
 {
     return accessHelper(pokemonName, "evolveLevel").toInt();
 }
-QString getEvolveTo(QString pokemonName)
+int getEvolveTo(QString pokemonName)
 {
     int id = accessHelper(pokemonName, "evolveTo").toInt();
-    return getPokemonName(QString::number(id));
+    return id;
 }
 QList<QString> getEvolChain(QString pokemonName)
 {

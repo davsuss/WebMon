@@ -56,7 +56,7 @@ int getSpeedYield(QString pokemonName);
 int getHPYield(QString pokemonName);
 int getEXPYield(QString pokemonName);
 int getEvolveLevel(QString pokemonName);
-QString getEvolveTo(QString pokemonName);
+int getEvolveTo(QString pokemonName);
 QList<QString> getEvolChain(QString pokemonName);
 int numberOfPokemon();
 
