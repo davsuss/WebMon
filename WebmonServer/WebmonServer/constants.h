@@ -15,7 +15,7 @@ const QString staticdatabase = "./databases/game.db";
 const QString dynamicdatabase = "./databases/saveData.db";
 
 const int easyToGrow = 12;
-const int goEasyonDamage = 5;
+const int goEasyonDamage = 3;
 
 // what a move looks like
 struct moveStruct
