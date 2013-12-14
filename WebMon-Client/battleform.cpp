@@ -17,6 +17,7 @@ BattleForm::BattleForm(QWidget *parent) :
     ui->EnemyHealth->setStyleSheet(progress);
     friendly = ui->FriendlySprite;
     enemy = ui->EnemySprite;
+    ui->MoveLayout->setSpacing(0);
 }
 
 BattleForm::~BattleForm()
@@ -34,6 +35,15 @@ void BattleForm::setFriendlyGif(QString gif)
 {
 setGif(gif,ui->FriendlySprite);
 }
+void BattleForm::SetFriendName(QString name)
+{
+ui->PokemonFriendName->setText(name);
+}
+void BattleForm::SetEnemyName(QString name)
+{
+ui->PokemonEnemyName->setText(name);
+}
+
 void BattleForm::setEnemyGif(QString gif)
 {
 setGif(gif,ui->EnemySprite);
@@ -41,8 +51,9 @@ setGif(gif,ui->EnemySprite);
 void BattleForm::setFriendlyMaxHealth(int health)
 {
     ui->FriendlyHealth->setRange(0,health);
+    ui->FriendlyHealth->setValue(health);
     maxFriendlyHealth = health;
-    ui->FriendHP->setText(QString(health + '/' + health));
+    ui->FriendHP->setText(QString("%1/%1").arg(health));
 }
 
 void BattleForm::SetFriendlyHealth(int health)
@@ -52,9 +63,10 @@ ui->FriendHP->setText(QString(health + '/' + maxFriendlyHealth));
 }
 void BattleForm::setEnemyMaxHealth(int health)
 {
-    ui->FriendlyHealth->setRange(0,health);
+    ui->EnemyHealth->setRange(0,health);
+    ui->EnemyHealth->setValue(health);
     MaxEnemyHealth = health;
-    ui->EnemyHP->setText(QString(health + '/' + health));
+    ui->EnemyHP->setText(QString("%1/%1").arg(health));
 }
 
 void BattleForm::SetEnemyHealth(int health)
@@ -62,10 +74,39 @@ void BattleForm::SetEnemyHealth(int health)
 ui->EnemyHealth->setValue(health);
 ui->EnemyHP->setText(QString(health + '/' + MaxEnemyHealth));
 }
+void BattleForm::SendMove()
+{
+    QPushButton* button = dynamic_cast<QPushButton*>(sender());
+    QString move = button->text();
+    move = move.left(move.lastIndexOf('-'));
+    emit MoveSelect(move);
+}
+
 void BattleForm::setBackground(QString png)
 {
 
 }
+void BattleForm::ReSetMoves(QList<QString>moves)
+{
+    QLayoutItem * child;
+    while((child = ui->MoveLayout->takeAt(0)) != 0)
+    {
+        ui->MoveLayout->removeItem(child);
+        delete child->widget();
+    }
+
+    int i = 0;
+    foreach(QString move, moves)
+    {
+        QPushButton * btn = new QPushButton();
+        btn->setText(move);
+       connect(btn,SIGNAL(clicked()),this,SLOT(SendMove()));
+       ui->MoveLayout->addWidget(btn,i,0);
+       i++;
+    }
+
+}
+
 void BattleForm::SetMoves(QList<QString> moves)
 {
     int i = 0;
@@ -73,6 +114,7 @@ void BattleForm::SetMoves(QList<QString> moves)
     {
         QPushButton * btn = new QPushButton();
         btn->setText(move);
+       connect(btn,SIGNAL(clicked()),this,SLOT(SendMove()));
        ui->MoveLayout->addWidget(btn,i,0);
        i++;
     }

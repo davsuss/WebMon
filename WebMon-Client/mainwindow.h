@@ -25,13 +25,19 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void setGif(QString gif,QLabel* label);
-    void SetBattle(QString pokemon1,QList<QString> moves ,QString pokemon2, int Health1, int Health2);
+    void SetBattle(PokemonInfo Mine,PokemonInfo enemy);
     void ShowTeam(QList<QString> * list);
     void ShowWait(PokemonInfo pk1, PokemonInfo pk2);
     void SetStatus(QString status);
 
+    void updateBattle(PokemonInfo mine, PokemonInfo enemy);
 public slots:
-    void CatchButton();
+    void RandomBattle();
+signals:
+    void RandomBattleSignal();
+    void MoveSelectSignal(QString move);
+private slots:
+    void MoveSelect(QString move);
 private:
     void ResetBattleForm();
     Ui::MainWindow *ui;

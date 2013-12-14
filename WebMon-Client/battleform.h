@@ -27,6 +27,9 @@ public:
     void setFriendlyMaxHealth(int health);
     void SetFriendName(QString name);
     void SetEnemyName(QString name);
+    void ReSetMoves(QList<QString>moves);
+private slots:
+    void SendMove();
 signals:
     void MoveSelect(QString move);
 

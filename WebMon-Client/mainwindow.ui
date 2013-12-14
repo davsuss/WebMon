@@ -18,13 +18,13 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>60</y>
+      <y>50</y>
       <width>631</width>
-      <height>301</height>
+      <height>321</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="About">
     <property name="geometry">
      <rect>
       <x>360</x>
@@ -37,7 +37,7 @@
      <string>About</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="RandomEncounter">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -50,7 +50,7 @@
      <string>Random-Encounter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="Close">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -85,7 +85,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="Title">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -109,8 +109,8 @@
    <widget class="QLabel" name="Status">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>30</y>
+      <x>10</x>
+      <y>10</y>
       <width>691</width>
       <height>20</height>
      </rect>

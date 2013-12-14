@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     btl = new BattleForm();
     waitingform = new WaitingForm();
-
+    connect(btl,SIGNAL(MoveSelect(QString)),this,SLOT(MoveSelect(QString)));
+    connect(ui->RandomEncounter,SIGNAL(clicked()),this,SLOT(RandomBattle()));
     setGif("Spr_2c_025.gif",ui->label_2);
     SetStatus("Please Connect to Server");
     //SetBattle("Charmander","Charmander",2,2);
@@ -64,21 +65,34 @@ void MainWindow::SetStatus(QString status)
 {
     ui->Status->setText(status);
 }
-void MainWindow::SetBattle(QString pokemon1,QList<QString> moves ,QString pokemon2, int Health1, int Health2)
+void MainWindow::MoveSelect(QString move)
+{
+    emit MoveSelectSignal(move);
+}
+void MainWindow::updateBattle(PokemonInfo mine, PokemonInfo enemy)
+{
+    btl->SetFriendlyHealth(mine.hp);
+    btl->ReSetMoves(mine.moves);
+    btl->SetEnemyHealth(enemy.hp);
+}
+
+void MainWindow::SetBattle(PokemonInfo Mine,PokemonInfo enemy)
 {
     QGridLayout *layout = new QGridLayout;
     ResetBattleForm();
-    btl->setFriendlyMaxHealth(Health1);
-    btl->setEnemyMaxHealth(Health2);
-    btl->setFriendlyGif(path + pokemon2 + ".gif");
-    btl->setEnemyGif(path + pokemon2 + "-Back.gif");
-    btl->SetMoves(moves);
+    btl->setFriendlyMaxHealth(Mine.hp);
+    btl->setEnemyMaxHealth(enemy.hp);
+    btl->setFriendlyGif(path + Mine.name + "-Back.gif");
+    btl->setEnemyGif(path + enemy.name + ".gif");
+    btl->SetMoves(Mine.moves);
+    btl->SetFriendName(Mine.name);
+    btl->SetEnemyName(enemy.name);
     layout->addWidget(btl);
     ui->BattleGroupBox->setLayout(layout);
 }
-void MainWindow::CatchButton()
-{
-
+void MainWindow::RandomBattle()
+{ 
+emit RandomBattleSignal();
 }
 void MainWindow::ShowTeam(QList<QString> * list)
 {

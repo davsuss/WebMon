@@ -23,6 +23,8 @@ public slots:
     void ConnectDisconnect();
 private slots:
     void ConnectToServer();
+    void RandomBattle();
+    void MoveSelect(QString move);
 signals:
     void DisplayTrainer();
     void RandomFight();

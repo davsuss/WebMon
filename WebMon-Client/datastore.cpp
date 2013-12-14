@@ -52,6 +52,29 @@ void DataStore::connectDisconnected()
 {
 emit connectionDisconnected();
 }
+void DataStore::StorePokemon(QList<PokemonInfo> *pk)
+{
+    m_pk = pk;
+}
+QList<PokemonInfo>* DataStore::GetPokemon()
+{
+    return m_pk;
+}
+
+void DataStore::SendMessage(QString msg)
+{
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_4_0);
+
+    out << (quint16)0;
+    out << tr(msg.toStdString().c_str());
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+    tcpSocket->write(block);
+    emit connectionSucessful();
+}
+
 void DataStore::connectSuccess()
 {
     QByteArray block;
