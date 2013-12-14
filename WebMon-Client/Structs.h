@@ -2,10 +2,12 @@
 #define STRUCTS_H
 const QString path = "./Resources/gifs/";
 const QString background = "./Resources/Pictures/Battle.png";
-struct PokemonWait
+struct PokemonInfo
 {
 QString name;
-QString info;
+int level;
+int hp;
+QList<QString> moves;
 };
 
 #endif // STRUCTS_H

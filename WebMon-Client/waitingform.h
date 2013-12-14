@@ -17,7 +17,7 @@ class WaitingForm : public QWidget
 public:
     explicit WaitingForm(QWidget *parent = 0);
     ~WaitingForm();
-    void SetPokemon(int number,PokemonWait pokemon);
+    void SetPokemon(int number,PokemonInfo pokemon);
     void setGif(QString gif, QLabel *label);
 private:
     Ui::WaitingForm *ui;

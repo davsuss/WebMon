@@ -25,9 +25,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void setGif(QString gif,QLabel* label);
-    void SetBattle(QString pokemon1,QString pokemon2,int Heath1,int Health2);
+    void SetBattle(QString pokemon1,QList<QString> moves ,QString pokemon2, int Health1, int Health2);
     void ShowTeam(QList<QString> * list);
-    void ShowWait(PokemonWait pk1, PokemonWait pk2);
+    void ShowWait(PokemonInfo pk1, PokemonInfo pk2);
     void SetStatus(QString status);
 
 public slots:

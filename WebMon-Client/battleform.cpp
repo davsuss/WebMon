@@ -38,14 +38,29 @@ void BattleForm::setEnemyGif(QString gif)
 {
 setGif(gif,ui->EnemySprite);
 }
+void BattleForm::setFriendlyMaxHealth(int health)
+{
+    ui->FriendlyHealth->setRange(0,health);
+    maxFriendlyHealth = health;
+    ui->FriendHP->setText(QString(health + '/' + health));
+}
 
 void BattleForm::SetFriendlyHealth(int health)
 {
-
+ui->FriendlyHealth->setValue(health);
+ui->FriendHP->setText(QString(health + '/' + maxFriendlyHealth));
 }
+void BattleForm::setEnemyMaxHealth(int health)
+{
+    ui->FriendlyHealth->setRange(0,health);
+    MaxEnemyHealth = health;
+    ui->EnemyHP->setText(QString(health + '/' + health));
+}
+
 void BattleForm::SetEnemyHealth(int health)
 {
-
+ui->EnemyHealth->setValue(health);
+ui->EnemyHP->setText(QString(health + '/' + MaxEnemyHealth));
 }
 void BattleForm::setBackground(QString png)
 {

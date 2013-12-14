@@ -23,10 +23,19 @@ public:
     void setEnemyGif(QString gif);
     void setBackground(QString png);
     void SetMoves(QList<QString> moves);
+    void setEnemyMaxHealth(int health);
+    void setFriendlyMaxHealth(int health);
+    void SetFriendName(QString name);
+    void SetEnemyName(QString name);
+signals:
+    void MoveSelect(QString move);
+
 private:
     Ui::BattleForm *ui;
     QLabel * friendly;
     QLabel * enemy;
+    int maxFriendlyHealth;
+    int MaxEnemyHealth;
 };
 
 #endif // BATTLEFORM_H

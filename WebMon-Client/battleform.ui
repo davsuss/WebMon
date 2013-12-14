@@ -107,12 +107,68 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
+  <widget class="QLabel" name="PokemonFriendName">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>66</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="FriendHP">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>120</y>
+     <width>66</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="PokemonEnemyName">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>20</y>
+     <width>66</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="EnemyHP">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>20</y>
+     <width>66</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
   <zorder>Background</zorder>
   <zorder>gridLayoutWidget</zorder>
   <zorder>FriendlySprite</zorder>
   <zorder>EnemySprite</zorder>
   <zorder>FriendlyHealth</zorder>
   <zorder>EnemyHealth</zorder>
+  <zorder>PokemonFriendName</zorder>
+  <zorder>FriendHP</zorder>
+  <zorder>PokemonEnemyName</zorder>
+  <zorder>EnemyHP</zorder>
  </widget>
  <resources/>
  <connections/>

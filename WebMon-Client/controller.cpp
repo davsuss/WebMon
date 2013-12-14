@@ -45,23 +45,38 @@ void Controller::ServerResponse(QString response)
         qDebug() << "Init Pokemon Team";
         QList<QString> pokemon1 = list[1].split("|");
         QList<QString> pokemon2 = list[2].split("|");
-        PokemonWait pk1;
+        PokemonInfo pk1;
         pk1.name = pokemon1[0];
-        pk1.info = "";
-        pk1.info += "HP:" + pokemon1[1] + "\n";
-        pk1.info += "Level:" + pokemon1[2] + "\n";
-        pk1.info += "Move 1:" + pokemon1[3] + "\n";
-        pk1.info += "Move 2:" + pokemon1[4] + "\n";
+        pk1.hp = pokemon1[1].toInt();
+        pk1.level = pokemon1[2].toInt();
+        pk1.moves.append(pokemon1[3]);
+        pk1.moves.append(pokemon1[4]);
 
-        PokemonWait pk2;
+        PokemonInfo pk2;
         pk2.name = pokemon2[0];
-        pk2.info = "";
-        pk2.info += "HP:" + pokemon2[1] + "\n";
-        pk2.info += "Level:" + pokemon2[2] + "\n";
-        pk2.info += "Move 1:" + pokemon2[3] + "\n";
-        pk2.info += "Move 2:" + pokemon2[4] + "\n";
+        pk2.hp = pokemon2[1].toInt();
+        pk2.level = pokemon2[2].toInt();
+        pk2.moves.append(pokemon2[3]);
+        pk2.moves.append(pokemon2[4]);
 
       main->ShowWait(pk1,pk2);
+    }
+    else if(list[0].startsWith("StartRandomEncounter",Qt::CaseInsensitive))
+    {
+        qDebug() << "Server: Starting Random Encounter";
+
+    }
+    else if(list[0].startsWith("MoveResult"),Qt::CaseInsensitive)
+    {
+
+    }
+    else if(list[0].startsWith("You Won",Qt::CaseInsensitive))
+    {
+
+    }
+    else if(list[0].startsWith("You Lost",Qt::CaseInsensitive))
+    {
+
     }
     else
     {qDebug() << response;}

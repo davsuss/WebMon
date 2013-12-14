@@ -18,14 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     btl = new BattleForm();
-    PokemonWait pk;
-    pk.name = "Charmander";
-    pk.info = "This is my info\n And this is my move";
     waitingform = new WaitingForm();
 
     setGif("Spr_2c_025.gif",ui->label_2);
     SetStatus("Please Connect to Server");
-    //ShowWait(pk,pk);
     //SetBattle("Charmander","Charmander",2,2);
     setEnabled(false);
 }
@@ -40,7 +36,7 @@ void MainWindow::setGif(QString gif, QLabel *label)
     label->setMovie(movie);
     movie->start();
 }
-void MainWindow::ShowWait(PokemonWait pk1, PokemonWait pk2)
+void MainWindow::ShowWait(PokemonInfo pk1, PokemonInfo pk2)
 {
 ResetBattleForm();
 QGridLayout * layout = new QGridLayout();
@@ -68,18 +64,15 @@ void MainWindow::SetStatus(QString status)
 {
     ui->Status->setText(status);
 }
-void MainWindow::SetBattle(QString pokemon1, QString pokemon2, int Health1, int Health2)
+void MainWindow::SetBattle(QString pokemon1,QList<QString> moves ,QString pokemon2, int Health1, int Health2)
 {
     QGridLayout *layout = new QGridLayout;
     ResetBattleForm();
-    btl->SetFriendlyHealth(Health1);
-    btl->SetEnemyHealth(Health2);
+    btl->setFriendlyMaxHealth(Health1);
+    btl->setEnemyMaxHealth(Health2);
     btl->setFriendlyGif(path + pokemon2 + ".gif");
     btl->setEnemyGif(path + pokemon2 + "-Back.gif");
-    QList<QString> list;
-    list.append("Move1 1/1");
-    list.append("Move 2/2");
-    btl->SetMoves(list);
+    btl->SetMoves(moves);
     layout->addWidget(btl);
     ui->BattleGroupBox->setLayout(layout);
 }
