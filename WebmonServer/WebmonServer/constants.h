@@ -14,7 +14,7 @@ const int moveLimit = 2; // variable to make sure a training pokemon can only ha
 const QString staticdatabase = "./databases/game.db";
 const QString dynamicdatabase = "./databases/saveData.db";
 
-const int easy = 5;
+const int easy = 7;
 
 // what a move looks like
 struct moveStruct

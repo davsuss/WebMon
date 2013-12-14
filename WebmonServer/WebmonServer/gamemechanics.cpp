@@ -337,7 +337,9 @@ int getHP(int EV, int baseHP, int level)
 }
 int getLevel(int EXP)
 {
-    return qPow(EXP, 1/3) / (100/maxLevel);
+    double n = (double)qPow(EXP, 1.0/3.0);
+    double d = (100.0/(double)maxLevel);
+    return n / d;
 }
 int getEXP(int level)
 {
