@@ -83,7 +83,7 @@ pokemonStruct genPkmn(int id, int level)
     generated.HPEV = 0;
     generated.speedEV = 0;
     generated.CPID = 0;
-    generated.EXP = 0;
+    generated.EXP = getEXP(level);
     generated.level = level;
     QString type = getPokemonType(name);
 
@@ -202,7 +202,6 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
             result.enemyAlive = false;
             result.meAlive = true;
             pkmn2.HP = 0;
-            return result;
         }
         pkmn1.HP -= result.damageOnMe;
         if( pkmn1.HP <= 0 )
@@ -210,7 +209,6 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
             result.enemyAlive = true;
             result.meAlive = false;
             pkmn1.HP = 0;
-            return result;
         }
     }
     else
@@ -222,7 +220,6 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
             result.enemyAlive = true;
             result.meAlive = false;
             pkmn1.HP = 0;
-            return result;
         }
         pkmn2.HP -= result.damageOnEnemy;
         if( pkmn2.HP <= 0 )
@@ -230,16 +227,17 @@ moveResult playMove(pokemonStruct &pkmn1, moveStruct &pkmn1move, pokemonStruct &
             result.enemyAlive = false;
             result.meAlive = true;
             pkmn2.HP = 0;
-            return result;
         }
     }
+    result.moveIUsed = pkmn1move.name;
+    result.moveUsedOnMe = pkmn2move.name;
     return result;
 }
 
 int growPokemon(pokemonStruct &pkmnVictor, pokemonStruct &pkmnLooser)
 {
     QString pkmnLost = pkmnLooser.name;
-    pkmnVictor.EXP += (((double)getEXPYield(pkmnLost) * (double)(pkmnLooser.level * (100.0/(double)maxLevel)))/12.0);
+    pkmnVictor.EXP += (((double)getEXPYield(pkmnLost) * (double)(pkmnLooser.level * (100.0/(double)maxLevel)))/12.0) * easy;
     int expLeft = levelUp(pkmnVictor);
     evolve(pkmnVictor);
     if( pkmnVictor.attEV + pkmnVictor.defEV + pkmnVictor.speedEV + pkmnVictor.HPEV <= 100 )
@@ -259,12 +257,12 @@ int levelUp(pokemonStruct &pkmn)
 {
     if( pkmn.level < maxLevel )
     {
-        int ExpCapforthisLevel = qPow(pkmn.level, 3);
+        int ExpCapforthisLevel = getEXP(pkmn.level + 1);
         while( pkmn.EXP >= ExpCapforthisLevel )
         {
             // level up
             pkmn.level++;
-            ExpCapforthisLevel =  qPow(pkmn.level, 3); // update expCap
+            ExpCapforthisLevel =  getEXP(pkmn.level + 1); // update expCap
         }
         return ExpCapforthisLevel - pkmn.EXP; // return how much exp left to go to next level
     }
@@ -301,12 +299,14 @@ int evolve(pokemonStruct &pkmn)
         return -1; // already filly evolved
     }
 }
-void restorePkmn(pokemonStruct pkmn)
+void restorePkmn(pokemonStruct &pkmn)
 {
     pkmn.HP = getHP(pkmn.HPEV, getBaseHP(pkmn.name), pkmn.level);
-    foreach(moveStruct m, pkmn.moves)
+    for(int i = 0; i < pkmn.moves.size(); i++)
     {
+        moveStruct m = pkmn.moves[i];
         m.pp = getPP(m.name);
+        pkmn.moves.replace(i, m);
     }
 }
 int damage(moveStruct moveUsed, pokemonStruct user, pokemonStruct victim)
@@ -337,7 +337,11 @@ int getHP(int EV, int baseHP, int level)
 }
 int getLevel(int EXP)
 {
-    return qPow(EXP, 1/3);
+    return qPow(EXP, 1/3) / (100/maxLevel);
+}
+int getEXP(int level)
+{
+    return qPow(level * (100/maxLevel), 3);
 }
 void save(QString trainer, QMap<QString, pokemonStruct> dataToSave)
 {

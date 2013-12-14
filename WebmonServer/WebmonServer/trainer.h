@@ -83,7 +83,7 @@ private:
     QString encodeMyTeam(); // converts m_pokemons into a protocol formatted string
     QString encodeOpposingTeam(); // converts m_oposing into a protocol formatted string
     QString encodeInitialResponse(); // enodes myself to send as initial response
-    QString encodeBattleResult(int expLeft); // encodes myself to send after a battle
+    QString encodeBattleResult(); // encodes myself to send after a battle
     QString encodeMoveResult(moveResult res); // encodes myself to send after a move has been played and landed
     QString encodeBattleInitResult();
     /***

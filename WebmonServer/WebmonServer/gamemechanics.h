@@ -42,8 +42,9 @@ int evolve(pokemonStruct &pkmn);
 int getStat(int EV, int baseStat, int level);
 int getHP(int EV, int baseHP, int level);
 int getLevel(int EXP);
+int getEXP(int level);
 int damage(moveStruct moveUsed, pokemonStruct user, pokemonStruct victim);
-void restorePkmn(pokemonStruct pkmn);
+void restorePkmn(pokemonStruct &pkmn);
 
 // saving and resuming
 void save(QString trainer, QMap<QString, pokemonStruct> dataToSave);

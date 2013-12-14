@@ -14,6 +14,8 @@ const int moveLimit = 2; // variable to make sure a training pokemon can only ha
 const QString staticdatabase = "./databases/game.db";
 const QString dynamicdatabase = "./databases/saveData.db";
 
+const int easy = 5;
+
 // what a move looks like
 struct moveStruct
 {
@@ -49,6 +51,8 @@ struct moveResult
     int damageOnMe;
     int damageOnEnemy;
     bool iWentFirst;
+    QString moveIUsed;
+    QString moveUsedOnMe;
 };
 
 enum gameState{unbuilt, idle, battle}; // for extensibility and to keep track what the trainer is doing

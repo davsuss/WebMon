@@ -120,7 +120,7 @@ void trainer::handleCommand(QString command)
         }
         else
         {
-            this->reply("id: " + this->m_id + " received urecognized command for a non battle state: " + command);
+            this->reply("Error received urecognized command for a non battle state: " + command);
         }
         break;
     }
@@ -151,16 +151,15 @@ void trainer::handleCommand(QString command)
                 else if( resp.meAlive  && !resp.enemyAlive)
                 {
                     int expLeft = growPokemon(m_pokemons[m_memberinBattle], m_opposing[m_opposinginBattle]);
-                    reply("Won:" + encodeBattleResult(expLeft));
                     m_trainerState = idle;
                     restorePkmn(m_pokemons[m_memberinBattle]);
+                    reply("Won:" + encodeBattleResult(expLeft));
                 }
                 else
                 {
-                    int expLeft = levelUp(m_pokemons[m_memberinBattle]);
-                    reply("Lost:" + encodeBattleResult(expLeft));
                     m_trainerState = idle;
                     restorePkmn(m_pokemons[m_memberinBattle]);
+                    reply("Lost:" + encodeBattleResult());
                 }
             }
             else
@@ -190,7 +189,7 @@ void trainer::saveData()
 QString trainer::encodePokemon(pokemonStruct member)
 {
     QString resp = "";
-    resp += member.name + "|" + QString::number(member.level) + "|" + QString::number(member.HP) + "|";
+    resp += member.name + "|" + QString::number(levelUp(member)) + "|" + QString::number(member.level) + "|" + QString::number(member.HP) + "|";
     int j = 0;
     foreach( moveStruct m, member.moves )
     {
@@ -238,33 +237,31 @@ QString trainer::encodeBattleInitResult()
     resp += encodePokemon(member);
     return resp;
 }
-QString trainer::encodeBattleResult(int expLeft)
+QString trainer::encodeBattleResult()
 {
-    // pokemon1Name.p1HP.p1m.p1m|p2...
-    QString res = "Battle over:" + QString::number(expLeft) + ":";
-    pokemonStruct member = m_pokemons[m_memberinBattle];
-    res += encodePokemon(member);
+    QString res = "Battle over:";
+    res += encodeMyTeam();
     return res;
 }
 
 QString trainer::encodeMoveResult(moveResult res)
 {
-    // pokemon1Name.p1HP.p1m.p1m|p2...
     QString resp = "";
     if( res.iWentFirst )
     {
         pokemonStruct member = m_pokemons[m_memberinBattle];
         resp += "Friend|" + encodePokemon(member) + ":";
         member = m_opposing[m_opposinginBattle];
-        resp += "Enemy|" + encodePokemon(member);
+        resp += "Enemy|" + encodePokemon(member) + ":";
     }
     else
     {
         pokemonStruct member = m_opposing[m_opposinginBattle];
         resp += "Enemy|" + encodePokemon(member) + ":";
         member = m_pokemons[m_memberinBattle];
-        resp += "Friend|" + encodePokemon(member);
+        resp += "Friend|" + encodePokemon(member) + ":";
     }
+    resp += QString::number(res.damageOnMe)+ ":" + QString::number(res.damageOnEnemy) + ":" + res.moveIUsed + ":" + res.moveUsedOnMe;
     return resp;
 }
 
