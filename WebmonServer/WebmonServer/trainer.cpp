@@ -150,10 +150,10 @@ void trainer::handleCommand(QString command)
                 }
                 else if( resp.meAlive  && !resp.enemyAlive)
                 {
-                    int expLeft = growPokemon(m_pokemons[m_memberinBattle], m_opposing[m_opposinginBattle]);
+                    growPokemon(m_pokemons[m_memberinBattle], m_opposing[m_opposinginBattle]);
                     m_trainerState = idle;
                     restorePkmn(m_pokemons[m_memberinBattle]);
-                    reply("Won:" + encodeBattleResult(expLeft));
+                    reply("Won:" + encodeBattleResult());
                 }
                 else
                 {
