@@ -1,6 +1,3 @@
-PROJECT NOT DONE YET!
-Estimated Completion Date: 12/12/2013
-
 Need QT to run this project. Either download Qt on your system or try to make this program and run it in you ssh account!
 
 ANY QUESTIONS send email to: bishwa9@vt.edu or davsuss@vt.edu
